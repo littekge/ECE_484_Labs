@@ -14,21 +14,21 @@ bool seg_switch = true;
 void setSevenSegments(uint8_t switchVal) {
 	switch(switchVal) {
 		case 0: PORTD = 0b11111010; break;
-		case 1: PORTD = 0bshee01100000; break;
+		case 1: PORTD = 0b10100000; break;
 		case 2: PORTD = 0b11011001; break;
 		case 3: PORTD = 0b11110001; break;
-		case 4: PORTD = 0b01100011; break;
-		case 5: PORTD = 0b10110011; break;
-		case 6: PORTD = 0b10111011; break;
+		case 4: PORTD = 0b10100011; break;
+		case 5: PORTD = 0b01110011; break;
+		case 6: PORTD = 0b01111011; break;
 		case 7: PORTD = 0b11100000; break;
 		case 8: PORTD = 0b11111011; break;
 		case 9: PORTD = 0b11100011; break;
 		case 10: PORTD = 0b11101011; break;
 		case 11: PORTD = 0b00111011; break;
-		case 12: PORTD = 0b10011010; break;
-		case 13: PORTD = 0b01111001; break;
-		case 14: PORTD = 0b10011011; break;
-		case 15: PORTD = 0b10001011; break;
+		case 12: PORTD = 0b01011010; break;
+		case 13: PORTD = 0b10111001; break;
+		case 14: PORTD = 0b01011011; break;
+		case 15: PORTD = 0b01001011; break;
 		default: PORTD = 0b00000000; break;
 	}
 }
@@ -46,12 +46,12 @@ ISR(PCINT0_vect) {
 // Timer 1 Interrupt
 ISR(TIMER1_COMPA_vect) {
 	if (seg_switch) {
-		setSevenSegments((count & 0b11110000) >> 4);
+		setSevenSegments(count & 0b00001111);
 		PORTB ^= (1 << PORTB1);
 		PORTB &= ~(1 << PORTB2);
 		seg_switch = false;
 	} else {
-		setSevenSegments(count & 0b00001111);
+		setSevenSegments((count & 0b11110000) >> 4);
 		PORTB ^= (1 << PORTB2);
 		PORTB &= ~(1 << PORTB1);
 		seg_switch = true;
@@ -75,11 +75,11 @@ int main(void)
 	
 	// Timer 1 Configuration
 	TCCR1A = (0 << COM1A1)|(0 << COM1A0)|(0 << COM1B1)|(0 << COM1B0)|(0 << WGM11)|(0 << WGM10); // Toggle OC1A and OC1B on compare match, Setting waveform generation to CTC mode
-	TCCR1B = (0 << WGM13)|(1 << WGM12)|(1 << CS12)|(0 << CS11)|(0 << CS10); // Setting wavefrom generation to CTC mode. Prescaler set to 256
+	TCCR1B = (0 << WGM13)|(1 << WGM12)|(0 << CS12)|(1 << CS11)|(0 << CS10); // Setting wavefrom generation to CTC mode. Prescaler set to 256
 	TIMSK1 = (1 << OCIE1A); // Enables the OCIE1A match interrupt
 	
 	// OCR1A Set
-	OCR1A = 31249; // for 500ms
+	OCR1A = 19999; // for 500ms
 	
     sei(); // enable global interrupt bit
 	

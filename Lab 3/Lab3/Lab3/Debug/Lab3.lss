@@ -135,8 +135,8 @@ void setSevenSegments(uint8_t switchVal) {
   d8:	8a ef       	ldi	r24, 0xFA	; 250
   da:	8b b9       	out	0x0b, r24	; 11
   dc:	08 95       	ret
-		case 1: PORTD = 0b01100000; break;
-  de:	80 e6       	ldi	r24, 0x60	; 96
+		case 1: PORTD = 0b10100000; break;
+  de:	80 ea       	ldi	r24, 0xA0	; 160
   e0:	8b b9       	out	0x0b, r24	; 11
   e2:	08 95       	ret
 		case 2: PORTD = 0b11011001; break;
@@ -147,16 +147,16 @@ void setSevenSegments(uint8_t switchVal) {
   ea:	81 ef       	ldi	r24, 0xF1	; 241
   ec:	8b b9       	out	0x0b, r24	; 11
   ee:	08 95       	ret
-		case 4: PORTD = 0b01100011; break;
-  f0:	83 e6       	ldi	r24, 0x63	; 99
+		case 4: PORTD = 0b10100011; break;
+  f0:	83 ea       	ldi	r24, 0xA3	; 163
   f2:	8b b9       	out	0x0b, r24	; 11
   f4:	08 95       	ret
-		case 5: PORTD = 0b10110011; break;
-  f6:	83 eb       	ldi	r24, 0xB3	; 179
+		case 5: PORTD = 0b01110011; break;
+  f6:	83 e7       	ldi	r24, 0x73	; 115
   f8:	8b b9       	out	0x0b, r24	; 11
   fa:	08 95       	ret
-		case 6: PORTD = 0b10111011; break;
-  fc:	8b eb       	ldi	r24, 0xBB	; 187
+		case 6: PORTD = 0b01111011; break;
+  fc:	8b e7       	ldi	r24, 0x7B	; 123
   fe:	8b b9       	out	0x0b, r24	; 11
  100:	08 95       	ret
 		case 7: PORTD = 0b11100000; break;
@@ -179,20 +179,20 @@ void setSevenSegments(uint8_t switchVal) {
  11a:	8b e3       	ldi	r24, 0x3B	; 59
  11c:	8b b9       	out	0x0b, r24	; 11
  11e:	08 95       	ret
-		case 12: PORTD = 0b10011010; break;
- 120:	8a e9       	ldi	r24, 0x9A	; 154
+		case 12: PORTD = 0b01011010; break;
+ 120:	8a e5       	ldi	r24, 0x5A	; 90
  122:	8b b9       	out	0x0b, r24	; 11
  124:	08 95       	ret
-		case 13: PORTD = 0b01111001; break;
- 126:	89 e7       	ldi	r24, 0x79	; 121
+		case 13: PORTD = 0b10111001; break;
+ 126:	89 eb       	ldi	r24, 0xB9	; 185
  128:	8b b9       	out	0x0b, r24	; 11
  12a:	08 95       	ret
-		case 14: PORTD = 0b10011011; break;
- 12c:	8b e9       	ldi	r24, 0x9B	; 155
+		case 14: PORTD = 0b01011011; break;
+ 12c:	8b e5       	ldi	r24, 0x5B	; 91
  12e:	8b b9       	out	0x0b, r24	; 11
  130:	08 95       	ret
-		case 15: PORTD = 0b10001011; break;
- 132:	8b e8       	ldi	r24, 0x8B	; 139
+		case 15: PORTD = 0b01001011; break;
+ 132:	8b e4       	ldi	r24, 0x4B	; 75
  134:	8b b9       	out	0x0b, r24	; 11
  136:	08 95       	ret
 		default: PORTD = 0b00000000; break;
@@ -265,27 +265,27 @@ ISR(TIMER1_COMPA_vect) {
 	if (seg_switch) {
  198:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  19c:	88 23       	and	r24, r24
- 19e:	81 f0       	breq	.+32     	; 0x1c0 <__vector_11+0x4a>
-		setSevenSegments((count & 0b11110000) >> 4);
- 1a0:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
- 1a4:	82 95       	swap	r24
- 1a6:	8f 70       	andi	r24, 0x0F	; 15
- 1a8:	0e 94 63 00 	call	0xc6	; 0xc6 <_Z16setSevenSegmentsh>
-		PORTB ^= (1 << PORTB1);
- 1ac:	95 b1       	in	r25, 0x05	; 5
- 1ae:	82 e0       	ldi	r24, 0x02	; 2
- 1b0:	89 27       	eor	r24, r25
- 1b2:	85 b9       	out	0x05, r24	; 5
-		PORTB &= ~(1 << PORTB2);
- 1b4:	85 b1       	in	r24, 0x05	; 5
- 1b6:	8b 7f       	andi	r24, 0xFB	; 251
- 1b8:	85 b9       	out	0x05, r24	; 5
-		seg_switch = false;
- 1ba:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
- 1be:	0f c0       	rjmp	.+30     	; 0x1de <__vector_11+0x68>
-	} else {
+ 19e:	79 f0       	breq	.+30     	; 0x1be <__vector_11+0x48>
 		setSevenSegments(count & 0b00001111);
- 1c0:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
+ 1a0:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
+ 1a4:	8f 70       	andi	r24, 0x0F	; 15
+ 1a6:	0e 94 63 00 	call	0xc6	; 0xc6 <_Z16setSevenSegmentsh>
+		PORTB ^= (1 << PORTB1);
+ 1aa:	95 b1       	in	r25, 0x05	; 5
+ 1ac:	82 e0       	ldi	r24, 0x02	; 2
+ 1ae:	89 27       	eor	r24, r25
+ 1b0:	85 b9       	out	0x05, r24	; 5
+		PORTB &= ~(1 << PORTB2);
+ 1b2:	85 b1       	in	r24, 0x05	; 5
+ 1b4:	8b 7f       	andi	r24, 0xFB	; 251
+ 1b6:	85 b9       	out	0x05, r24	; 5
+		seg_switch = false;
+ 1b8:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 1bc:	10 c0       	rjmp	.+32     	; 0x1de <__vector_11+0x68>
+	} else {
+		setSevenSegments((count & 0b11110000) >> 4);
+ 1be:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
+ 1c2:	82 95       	swap	r24
  1c4:	8f 70       	andi	r24, 0x0F	; 15
  1c6:	0e 94 63 00 	call	0xc6	; 0xc6 <_Z16setSevenSegmentsh>
 		PORTB ^= (1 << PORTB2);
@@ -352,16 +352,16 @@ int main(void)
 	// Timer 1 Configuration
 	TCCR1A = (0 << COM1A1)|(0 << COM1A0)|(0 << COM1B1)|(0 << COM1B0)|(0 << WGM11)|(0 << WGM10); // Toggle OC1A and OC1B on compare match, Setting waveform generation to CTC mode
  21e:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
-	TCCR1B = (0 << WGM13)|(1 << WGM12)|(1 << CS12)|(0 << CS11)|(0 << CS10); // Setting wavefrom generation to CTC mode. Prescaler set to 256
- 222:	9c e0       	ldi	r25, 0x0C	; 12
+	TCCR1B = (0 << WGM13)|(1 << WGM12)|(0 << CS12)|(1 << CS11)|(0 << CS10); // Setting wavefrom generation to CTC mode. Prescaler set to 256
+ 222:	9a e0       	ldi	r25, 0x0A	; 10
  224:	90 93 81 00 	sts	0x0081, r25	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
 	TIMSK1 = (1 << OCIE1A); // Enables the OCIE1A match interrupt
  228:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7f806f>
 	
 	// OCR1A Set
-	OCR1A = 31249; // for 500ms
- 22c:	81 e1       	ldi	r24, 0x11	; 17
- 22e:	9a e7       	ldi	r25, 0x7A	; 122
+	OCR1A = 19999; // for 500ms
+ 22c:	8f e1       	ldi	r24, 0x1F	; 31
+ 22e:	9e e4       	ldi	r25, 0x4E	; 78
  230:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
  234:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
 	
