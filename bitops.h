@@ -7,20 +7,10 @@ namespace BOP {
 	inline void set1(volatile uint8_t& reg, uint8_t bitNum) {
 		reg |= (1 << bitNum);
 	}
-	inline void set1(volatile uint8_t& reg, uint8_t bitNums[], size_t size) {
-		for (uint8_t i = 1; i < size; i++) {
-			set1(reg, bitNums[i]);
-		}
-	}
 	
 	//set0 methods
 	inline void set0(volatile uint8_t& reg, uint8_t bitNum) {
 		reg &= ~(1 << bitNum);
-	}
-	inline void set0(volatile uint8_t& reg, uint8_t bitNums[], size_t size) {
-		for (uint8_t i = 1; i < size; i++) {
-			set0(reg, bitNums[i]);
-		}
 	}
 	
 	//check if a bit is 1
@@ -36,11 +26,6 @@ namespace BOP {
 	//toggle a bit
 	inline void toggle(volatile uint8_t& reg, uint8_t bitNum) {
 		reg ^= (1 << bitNum);
-	}
-	inline void toggle(volatile uint8_t& reg, uint8_t bitNums[], size_t size) {
-		for (uint8_t i = 1; i < size; i++) {
-			toggle(reg, bitNums[i]);
-		}
 	}
 }
 
