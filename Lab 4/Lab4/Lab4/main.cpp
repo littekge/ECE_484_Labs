@@ -19,12 +19,12 @@ const int16_t encoder_table[16]={ //ENCODER LOOKUP TABLE
 //encoder states and count
 volatile uint8_t newChannels = 0x00;
 volatile uint8_t oldChannels = 0x00;
-volatile int16_t encoderCount =0x00; //POSITIONAL COUNT VARIABLE
+volatile int16_t encoderCount = 0x00; //POSITIONAL COUNT VARIABLE
 
 //declare debouncing variables
 volatile uint8_t rising_edges = 0x00;
-volatile uint8_t falling_edges =0x00;
-volatile uint8_t switch_states =0x00;
+volatile uint8_t falling_edges = 0x00;
+volatile uint8_t switch_states = 0x00;
 
 //declare buffer array
 const uint8_t kBufferLength = 8;
