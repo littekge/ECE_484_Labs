@@ -39,17 +39,17 @@ namespace SEG {
 	void nextNum() {
 		switch (digit) {
 			case 0:
-				decode(displayNum & 0xF000 >> 12);
+				decode((displayNum & 0xF000) >> 12);
 				PORTB ^= (1 << PORTB0);
 				PORTB &= ~((1 << PORTB1) | (1 << PORTB2) | (1 << PORTB3));
 				break;
 			case 1:
-				decode(displayNum & 0x0F00 >> 8);
+				decode((displayNum & 0x0F00) >> 8);
 				PORTB ^= (1 << PORTB1);
 				PORTB &= ~((1 << PORTB0) | (1 << PORTB2) | (1 << PORTB3));
 				break;
 			case 2:
-				decode(displayNum & 0x00F0 >> 4);
+				decode((displayNum & 0x00F0) >> 4);
 				PORTB ^= (1 << PORTB2);
 				PORTB &= ~((1 << PORTB0) | (1 << PORTB1) | (1 << PORTB3));
 				break;
@@ -60,6 +60,7 @@ namespace SEG {
 				break;
 			default:
 				digit = 0;
+				return;
 				break;
 		}
 		digit++;
