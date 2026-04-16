@@ -134,7 +134,10 @@ void lockStateMachine(){
 	//YOUR CODE HERE
 }
 ISR(TIMER1_COMPA_vect){
-	//YOUR CODE HERE
+	softwareDebounce(PORTB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
+	if falling_edges {
+		lockStateMachine();
+	}
 }
 int main(void)
 {
@@ -173,9 +176,8 @@ int main(void)
 	dispText(0x40, false, "CODE: ");
 	//Configure Timer 1
 	TCCR1A = (0 << WGM11) | (0 << WGM10); // Configuring for CTC mode
-	TCCR1B = (0 << WGM13) | (1 << WGM12);
-	
-	
+	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (0 << CS11) | (1 << CS10);
+	OCR1A = 15999; // 1 ms
 	sei();
 	/* Replace with your application code */
 	while (1)
