@@ -117,12 +117,25 @@ void stepperStateMachine(){
 		stepperState=3;
 	}
 }
+
+void dispText(uint8_t address, bool clear, char text[]) {
+	//set LCD
+	if (clear) {
+		LCD_Command(CLEAR_DISPLAY); //clear display
+	}
+	_delay_ms(2);
+	LCD_Command(SET_ADDRESS|address); //set address
+	for (uint8_t i = 0; i < sizeof(text)-1; i++) {
+		LCD_Display(dispText[i]);
+	}
+}
+
 void lockStateMachine(){
 	//YOUR CODE HERE
 }
 ISR(TIMER1_COMPA_vect){
-	softwareDebounce(PORTB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
-	if falling_edges {
+	softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
+	if (falling_edges) {
 		lockStateMachine();
 	}
 }
@@ -158,19 +171,9 @@ int main(void)
 	_delay_ms(2);
 	LCD_Command(0x0C); //Display no cursor
 	LCD_Command(0x06); //Automatic Increment
-	LCD_Command(SET_ADDRESS|0x00);
-	LCD_Display('U');
-	LCD_Display('N');
-	LCD_Display('L');
-	LCD_Display('O');
-	LCD_Display('C');
-	LCD_Display('K');
-	LCD_Command(SET_ADDRESS|0x40);
-	LCD_Display('C');
-	LCD_Display('O');
-	LCD_Display('D');
-	LCD_Display('E');
-	LCD_Display(':');
+	
+	dispText(0x00, false, "UNLOCK");
+	dispText(0x40, false, "CODE: ");
 	//Configure Timer 1
 	TCCR1A = (0 << WGM11) | (0 << WGM10); // Configuring for CTC mode
 	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (0 << CS11) | (1 << CS10);
