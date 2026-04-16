@@ -134,7 +134,7 @@ void lockStateMachine(){
 	//YOUR CODE HERE
 }
 ISR(TIMER1_COMPA_vect){
-	softwareDebounce(PORTB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
+	softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
 	if (falling_edges) {
 		lockStateMachine();
 	}
