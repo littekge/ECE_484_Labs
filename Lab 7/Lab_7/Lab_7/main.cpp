@@ -29,6 +29,10 @@ volatile uint8_t switch_array[kBufferLength]={0};
 int8_t stepperState=0;
 int8_t stepperDirection=0;
 //Sample switches at particular interval
+bool A = false;
+bool B = false;
+bool C = false;
+
 void softwareDebounce(uint8_t sampleData){
 	static uint8_t sample_index= 0; //Index used to store switch samples in array
 	uint8_t stable_high = 0xFF; //Initialize temporary stable_high all high
@@ -118,21 +122,63 @@ void stepperStateMachine(){
 	}
 }
 
-void dispText(uint8_t address, bool clear, char text[]) {
+void dispText(uint8_t address, bool clear, char* text, uint8_t size) {
 	//set LCD
 	if (clear) {
 		LCD_Command(CLEAR_DISPLAY); //clear display
 	}
 	_delay_ms(2);
 	LCD_Command(SET_ADDRESS|address); //set address
-	for (uint8_t i = 0; i < sizeof(text)-1; i++) {
-		LCD_Display(dispText[i]);
+	for (uint8_t i = 0; i < size-1; i++) {
+		LCD_Display(text[i]);
 	}
 }
 
-void lockStateMachine(){
-	//YOUR CODE HERE
+void reset() {
+	char text[] = "   ";
+	dispText(0x46, false, text, sizeof(text));
 }
+
+enum State {
+	START,
+	PASS_A,
+	PASS_AB,
+	PASS_ABC,
+	PASS_C,
+	PASS_CB,
+	PASS_CBA
+	};
+	
+enum State state = START;
+
+void lockStateMachine(){
+	// check A
+	switch(state) {
+		case START: {
+			if (falling_edges & (1 << PINB0)) {
+				char text[] = "A";
+				dispText(0x46, false, text, sizeof(text));
+				state = PASS_A;
+			} else {
+				reset();
+				state = START;
+			}
+			break;
+		}
+		case PASS_A: {
+			if (falling_edges & (1 << PINB1)) {
+				char text[] = "B";
+				dispText(0x47, false, text, sizeof(text));
+				state = PASS_A;
+			} else {
+				reset();
+				state = START;
+			}
+			break;
+		}
+	}
+}
+
 ISR(TIMER1_COMPA_vect){
 	softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
 	if (falling_edges) {
@@ -172,11 +218,14 @@ int main(void)
 	LCD_Command(0x0C); //Display no cursor
 	LCD_Command(0x06); //Automatic Increment
 	
-	dispText(0x00, false, "UNLOCK");
-	dispText(0x40, false, "CODE: ");
+	char text[] = "UNLOCK";
+	dispText(0x00, true, text, sizeof(text));
+	char text1[] = "CODE:";
+	dispText(0x40, false, text1, sizeof(text1));
 	//Configure Timer 1
 	TCCR1A = (0 << WGM11) | (0 << WGM10); // Configuring for CTC mode
 	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (0 << CS11) | (1 << CS10);
+	TIMSK1 = (1 << OCIE1A);
 	OCR1A = 15999; // 1 ms
 	sei();
 	/* Replace with your application code */
