@@ -140,28 +140,30 @@ void reset() {
 }
 
 enum State {
-	START,
+	UNLOCK,
 	PASS_A,
 	PASS_AB,
 	PASS_ABC,
 	PASS_C,
 	PASS_CB,
-	PASS_CBA
+	PASS_CBA,
+	LOCK
 	};
 	
-enum State state = START;
+enum State state = UNLOCK;
 
 void lockStateMachine(){
+	
 	// check A
 	switch(state) {
-		case START: {
+		case UNLOCK: {
+			reset();
 			if (falling_edges & (1 << PINB0)) {
 				char text[] = "A";
 				dispText(0x46, false, text, sizeof(text));
 				state = PASS_A;
 			} else {
-				reset();
-				state = START;
+				state = UNLOCK;
 			}
 			break;
 		}
@@ -169,11 +171,79 @@ void lockStateMachine(){
 			if (falling_edges & (1 << PINB1)) {
 				char text[] = "B";
 				dispText(0x47, false, text, sizeof(text));
-				state = PASS_A;
+				state = PASS_AB;
 			} else {
 				reset();
-				state = START;
+				state = UNLOCK;
 			}
+			break;
+		}
+		case PASS_AB: {
+			if (falling_edges & (1 << PINB2)) {
+				char text[] = "C";
+				dispText(0x48, false, text, sizeof(text));
+				state = PASS_ABC;
+				lockStateMachine();
+			} else {
+				reset();
+				state = UNLOCK;
+			}
+			break;
+		}
+		case PASS_ABC: {
+			char text1[] = "LOCK  ";
+			dispText(0x00, false, text1, sizeof(text1));
+			stepperDirection = 1;
+			for (uint16_t i = 0; i < 1024; i++) {
+				_delay_ms(10);
+				stepperStateMachine();
+			}
+			state = LOCK;
+			break;
+		}
+		case LOCK: {
+			reset();
+			if (falling_edges & (1 << PINB2)) {
+				char text[] = "C";
+				dispText(0x46, false, text, sizeof(text));
+				state = PASS_C;
+			} else {
+				state = LOCK;
+			}
+			break;
+		}
+		case PASS_C: {
+			if (falling_edges & (1 << PINB1)) {
+				char text[] = "B";
+				dispText(0x47, false, text, sizeof(text));
+				state = PASS_CB;
+			} else {
+				reset();
+				state = LOCK;
+			}
+			break;
+		}
+		case PASS_CB: {
+			if (falling_edges & (1 << PINB0)) {
+				char text[] = "A";
+				dispText(0x48, false, text, sizeof(text));
+				state = PASS_CBA;
+				lockStateMachine();
+			} else {
+				reset();
+				state = LOCK;
+			}
+			break;
+		}
+		case PASS_CBA: {
+			char text1[] = "UNLOCK";
+			dispText(0x00, false, text1, sizeof(text1));
+			stepperDirection = -1;
+			for (uint16_t i = 0; i < 1024; i++) {
+				_delay_ms(10);
+				stepperStateMachine();
+			}
+			state = UNLOCK;
 			break;
 		}
 	}
