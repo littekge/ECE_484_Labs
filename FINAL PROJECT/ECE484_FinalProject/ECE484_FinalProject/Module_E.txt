@@ -1,0 +1,49 @@
+/*---------- MODULE E FUNCTIONS ----------*/
+void dispText(uint8_t address, bool clear, const char* text) {
+	//set LCD
+	if (clear) {
+		LCD_Command(CLEAR_DISPLAY); //clear display
+	}
+	_delay_ms(2);
+	LCD_Command(SET_ADDRESS|address); //set address
+	uint8_t i = 0;
+	while (text[i] != '\0') {
+		LCD_Display(text[i]);
+		i++;
+	}
+}
+
+ISR(INT1_vect) {
+	if (UCSR0A & (1 << UDRE0)) { //check if transmit buffer is empty
+		UDR0 = 0b11110000; //send code
+	}
+}
+
+ISR(USART_TX_vect) {
+	//change mode to receiver
+	UCSR0B = (0 << TXCIE0)|(0 << TXEN0)|(1 << RXCIE0)|(1 << RXEN0); //enabling reciever mode and interrupt
+}
+
+ISR(USART_RX_vect) {
+	uint8_t recievedData = UDR0;
+	if (recievedData == 0b00001111) {
+		UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
+		dispText(0x00, true, "OK");
+		_delay_ms(2000);
+		//INSERT CURRENT STATUS CODE HERE
+	}
+}
+/*---------- END MODULE E FUNCTIONS ----------*/
+
+/*---------- MODULE E SETUP CODE ----------*/
+//USART config
+UCSR0A = (0 << U2X0)|(1 << MPCM0); //standard data prescaler, enable multiprocessor communication mode
+UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
+UCSR0A = (1 << UCSZ01)|(1 << UCSZ00); //setting frame size to 8 bits
+UBRR0 = 3; //setting baud rate to 250k
+
+//external interrupt 1 config
+EIMSK |= (1 << INT1); //enabling int 1
+EICRA |= (1 << ISC11); //setting trigger on falling edge
+EICRA &= ~(1 << ISC10);
+/*---------- END MODULE E SETUP CODE ----------*/
