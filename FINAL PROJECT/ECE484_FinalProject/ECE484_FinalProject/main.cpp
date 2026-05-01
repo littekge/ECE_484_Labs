@@ -109,6 +109,7 @@ void LCD_Command(unsigned char command)
 	TWI(LCD_ADDRESS,((command<<4) & 0xF0)|LCD_ENABLE|LCD_WRITE|LCD_BL);
 }
 
+/*
 void dispText(uint8_t address, bool clear, char* text, uint8_t size) {
 	//set LCD
 	if (clear) {
@@ -120,10 +121,20 @@ void dispText(uint8_t address, bool clear, char* text, uint8_t size) {
 		LCD_Display(text[i]);
 	}
 }
+*/
 
-void reset() {
-	char text[] = "   ";
-	dispText(0x46, false, text, sizeof(text));
+void dispText(uint8_t address, bool clear, const char* text) {
+	//set LCD
+	if (clear) {
+		LCD_Command(CLEAR_DISPLAY); //clear display
+	}
+	_delay_ms(2);
+	LCD_Command(SET_ADDRESS|address); //set address
+	uint8_t i = 0;
+	while (text[i] != '\0') {
+		LCD_Display(text[i]);
+		i++;
+	}
 }
 
 void stepperStateMachine(){
@@ -183,13 +194,26 @@ enum State {
 };
 
 enum State state = DISSARMED;
+enum State previous_state;
+bool first;
+bool first_override;
 
 void stateMachine(uint8_t falling) {
+	first = !(previous_state == state);
+	if (first_override) {
+		first = true;
+		first_override = false;
+	}
+	previous_state = state;
 	switch(state) {
 		case DISSARMED: {
+			if (first) {
+				dispText(0x00, true, "DISSARMED");
+				dispText(0x40, false, "CODE:    ");
+			}
+
 			if (falling & (1 << PINB0)) {
-				char text[] = "A";
-				dispText(0x46, false, text, sizeof(text));
+				dispText(0x46, false, "A");
 				state = PASS_A;
 			} else {
 				state = DISSARMED;  // just wait
@@ -197,13 +221,15 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case PASS_A: {
+			if (first) {
+				dispText(0x00, true, "DISSARMED");
+				dispText(0x40, false, "CODE: A");
+			}
+			
 			if (falling & (1 << PINB1)) {
-				char text[] = "B";
-				dispText(0x47, false, text, sizeof(text));
+				dispText(0x47, false, "B");
 				state = PASS_AB;
 			} else if (falling & ((1 << PINB0) | (1 << PINB2))) {
-				char text[] = "   ";
-				dispText(0x46, false, text, sizeof(text));
 				state = DISSARMED;
 			} else {
 				state = PASS_A;
@@ -211,32 +237,39 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case PASS_AB: {
+			if (first) {
+				dispText(0x00, true, "DISSARMED");
+				dispText(0x40, false, "CODE: AB");
+			}
+
 			if (falling & (1 << PINB2)) {
-				char text[] = "C";
-				dispText(0x48, false, text, sizeof(text));
+				dispText(0x48, false, "C");
 				state = PASS_ABC;
 			} else if (falling & ((1 << PINB0) | (1 << PINB1))) {
-				char text[] = "   ";
-				dispText(0x46, false, text, sizeof(text));
 				state = DISSARMED;
 			} else {
-				
 				state = PASS_AB;
 			}
 			break;
 		}
 		case PASS_ABC: {
+			if (first) {
+				dispText(0x00, true, "DISSARMED");
+				dispText(0x40, false, "CODE: ABC Cd:");
+			}
 			state = COUNTDOWN;
-			char text[] = "Cd:";
-			dispText(0x4A, false, text, sizeof(text));
 			break;
 		}
 		case COUNTDOWN: {
+			if (first) {
+				dispText(0x00, true, "DISSARMED");
+				dispText(0x40, false, "CODE: ABC Cd:");
+			}
 			if (count >= 1000) {
 				ones = countdown_var % 10;
 				tens = (countdown_var / 10) % 10;
-				char text[] = {char(0b00110000 | tens), char(0b00110000 | ones), '/0'};
-				dispText(0x4E, false, text, sizeof(text));		
+				char text[] = {char(0b00110000 | tens), char(0b00110000 | ones), '\0'};
+				dispText(0x4E, false, text);		
 				count = 0;
 				countdown_var++;
 			} else {
@@ -251,25 +284,26 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case LOCK: {
+			dispText(0x00, first, "LOCKING...");
 			stepperDirection = 1;
 			for (uint16_t i = 0; i < 512; i++) {
 				_delay_ms(10);
 				stepperStateMachine();
 			}
 			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
-			char text[] = "ARMED    ";
-			dispText(0x00, false, text, sizeof(text));
-			char text1[] = "           ";
-			dispText(0x45, false, text1, sizeof(text1));
 			PORTB |= (1 << PINB4);
 			PORTB &= ~(1 << PINB5);
 			state = ARMED;
 			break;
 		}
 		case ARMED: {
+			if (first) {
+				dispText(0x00, true, "ARMED");
+				dispText(0x40, false, "CODE:    ");
+			}
+			
 			if (falling & (1 << PINB2)) {
-				char text[] = "C";
-				dispText(0x46, false, text, sizeof(text));		
+				dispText(0x46, false, "C");		
 				state = PASS_C;
 			} else {			
 				state = ARMED;
@@ -277,13 +311,15 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case PASS_C: {
+			if (first) {
+				dispText(0x00, true, "ARMED");
+				dispText(0x40, false, "CODE: C");
+			}
+			
 			if (falling_edges & (1 << PINB1)) {
-				char text[] = "B";
-				dispText(0x47, false, text, sizeof(text));	
+				dispText(0x47, false, "B");	
 				state = PASS_CB;
 			} else if (falling_edges & ((1 << PINB0) | (1 << PINB2))) {
-				char text[] = "   ";
-				dispText(0x46, false, text, sizeof(text));	
 				state = ALARM;
 			} else {
 				state = PASS_C;
@@ -291,13 +327,15 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case PASS_CB: {
+			if (first) {
+				dispText(0x00, true, "ARMED");
+				dispText(0x40, false, "CODE: CB");
+			}
+
 			if (falling_edges & (1 << PINB0)) {
-				char text[] = "A";
-				dispText(0x48, false, text, sizeof(text));
+				dispText(0x48, false, "A");
 				state = PASS_CBA;
 			} else if (falling_edges & ((1 << PINB1) | (1 << PINB2))) {
-				char text[] = "   ";
-				dispText(0x46, false, text, sizeof(text));
 				state = ALARM;
 			} else {		
 				state = PASS_CB;
@@ -305,6 +343,11 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case PASS_CBA: {
+			if (first) {
+				dispText(0x00, true, "ARMED");
+				dispText(0x40, false, "CODE: CBA");
+			}
+
 			blink_red = false;
 			count = 0;
 			PORTB &= ~(1 << PINB3); // turning off the alarm
@@ -319,17 +362,15 @@ void stateMachine(uint8_t falling) {
 			break;
 		}
 		case UNLOCK: {
+			dispText(0x00, first, "UNLOCKING...");
 			stepperDirection = -1;
 			for (uint16_t i = 0; i < 512; i++) {
 				_delay_ms(10);
 				stepperStateMachine();
 			}
+			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
 			PORTB &= ~(1 << PINB4);
 			PORTB |= 1 << PINB5;
-			char text[] = "DISSARMED";
-			dispText(0x00, false, text, sizeof(text));
-			char text1[] = "         ";
-			dispText(0x46, false, text1, sizeof(text));
 			state = DISSARMED;
 			break; 
 		}
@@ -347,6 +388,7 @@ void stateMachine(uint8_t falling) {
 		}
 		count++;
 	}
+	
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -355,6 +397,36 @@ ISR(TIMER1_COMPA_vect) {
     uint8_t falling = softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
 	stateMachine(falling);
 }
+
+
+/*---------- MODULE E FUNCTIONS ----------*/
+ISR(INT1_vect) {
+	if (UCSR0A & (1 << UDRE0)) { //check if transmit buffer is empty
+		UDR0 = 0b11110000; //send code
+		//UDR0 = 0b01010100; //send code
+		//dispText(0x00, true, "TEST TEST");
+		//_delay_ms(2000);
+	}
+	
+}
+
+ISR(USART_TX_vect) {
+	//change mode to receiver
+	UCSR0B = (0 << TXCIE0)|(0 << TXEN0)|(1 << RXCIE0)|(1 << RXEN0); //enabling reciever mode and interrupt
+}
+
+ISR(USART_RX_vect) {
+	uint8_t recievedData = UDR0;
+	if (recievedData == 0b00001111) {
+		UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
+		dispText(0x00, true, "OK");
+		_delay_ms(2000);
+		//INSERT CURRENT STATUS CODE HERE
+		first_override = true;
+	}
+}
+/*---------- END MODULE E FUNCTIONS ----------*/
+
 
 int main(void)
 {
@@ -392,10 +464,8 @@ int main(void)
 	LCD_Command(0x06); //Automatic Increment
 	
 	// LCD initial message
-	char text[] = "DISSARMED";
-	dispText(0x00, true, text, sizeof(text));
-	char text1[] = "CODE:    ";
-	dispText(0x40, false, text1, sizeof(text1));
+	dispText(0x00, true, "DISSARMED");
+	dispText(0x40, false, "CODE:    ");
 	PORTB |= (1 << PINB5);
 
 	// Timer 1 Initialization
@@ -404,7 +474,26 @@ int main(void)
 	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (0 << CS11) | (1 << CS10); // Prescaler of 1
 	TIMSK1 = (1 << OCIE1A);
 	OCR1A = 15999; // 1 ms
+	
+	/*---------- MODULE E SETUP CODE ----------*/
+	//IO config
+	DDRD &= ~(1 << PIND3);
+	
+	//USART config
+	UCSR0A = (0 << U2X0)|(1 << MPCM0); //standard data prescaler, enable multiprocessor communication mode
+	UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
+	UCSR0A = (1 << UCSZ01)|(1 << UCSZ00); //setting frame size to 8 bits
+	UBRR0 = 7; //setting baud rate to 250k
+
+	//external interrupt 1 config
+	EIMSK |= (1 << INT1); //enabling int 1
+	EICRA |= (1 << ISC11); //setting trigger on falling edge
+	EICRA &= ~(1 << ISC10);
+	/*---------- END MODULE E SETUP CODE ----------*/
+	
 	sei();
+	
+	
 	
     /* Replace with your application code */
     while (1) 
