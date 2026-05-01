@@ -2,7 +2,7 @@
  * ECE484_FinalProject.cpp
  *
  * Created: 4/30/2026 10:37:24 AM
- * Author : james
+ * Author : James Nippa
  */ 
 
 // Includes
@@ -12,6 +12,10 @@
 #include <util/delay.h>
 
 // LCD Signals
+//TWI constants
+#define TWI_START 0xA4 //(enable=1, start=1, interrupt flag=1)
+#define TWI_STOP 0x94 //(enable=1, stop=1, interrupt flag=1)
+#define TWI_SEND 0x84 //(enable=1, start=0, interrupt flag=1)
 // D7 D6 D5 D4 BL E RW RS
 #define LCD_ADDRESS 0x4E //device address (0x27) in 7 MSB + W (0) in LSB
 #define LCD_DISABLE 0x04
@@ -29,17 +33,23 @@
 volatile uint8_t rising_edges = 0x00;
 volatile uint8_t falling_edges =0x00;
 volatile uint8_t switch_states =0x00;
+
 //declare buffer array
 const uint8_t kBufferLength = 8;
 volatile uint8_t switch_array[kBufferLength]={0};
-	
+
 //stepper state machine variable
 int8_t stepperState=0;
 int8_t stepperDirection=0;
 
-// 
+// system state machine variables
+uint8_t ones;
+uint8_t tens;
+uint16_t count = 0;
+uint8_t countdown_var = 1;
+bool blink_red = false;
 
-void softwareDebounce(uint8_t sampleData){
+ uint8_t softwareDebounce(uint8_t sampleData){
 	static uint8_t sample_index= 0; //Index used to store switch samples in array
 	uint8_t stable_high = 0xFF; //Initialize temporary stable_high all high
 	uint8_t stable_low = 0; //Initialize temporary stable_low all low
@@ -60,6 +70,8 @@ void softwareDebounce(uint8_t sampleData){
 	//Update sample index and wrap if necessary
 	if(++sample_index>=kBufferLength)
 	sample_index = 0;//wrap
+	
+	return(falling_edges);
 }
 
 void TWI(unsigned char address, unsigned char data)
@@ -118,31 +130,39 @@ void stepperStateMachine(){
 	//STATE MACHINE FOR UNL2003 FULL STEP MODE
 	switch(stepperState){
 		//STEP AB
-		case 0:
-		PORTC=0x03;
-		stepperState=stepperState+stepperDirection;
-		break;
+		case 0: {
+			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
+			PORTD |= ((1 << PIND4) | (1 << PIND5) | (0 << PIND6) | (0 << PIND7));
+			stepperState = stepperState + stepperDirection;
+			break;
+		}
 		//STEP BC
-		case 1:
-		PORTC=0x06;
-		stepperState=stepperState+stepperDirection;
-		break;
+		case 1: {
+			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
+			PORTD |= ((0 << PIND4) | (1 << PIND5) | (1 << PIND6) | (0 << PIND7));
+			stepperState = stepperState + stepperDirection;
+			break;
+		}
 		//STEP CD
-		case 2:
-		PORTC=0x0C;
-		stepperState = stepperState + stepperDirection;
-		break;
+		case 2: {
+			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
+			PORTD |= ((0 << PIND4) | (0 << PIND5) | (1 << PIND6) | (1 << PIND7));
+			stepperState = stepperState + stepperDirection;
+			break;
+		}
 		//STEP DA
-		case 3:
-		PORTC=0x09;
-		stepperState=stepperState+stepperDirection;
-		break;
+		case 3: {
+			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
+			PORTD |= ((1 << PIND4) | (0 << PIND5) | (0 << PIND6) | (1 << PIND7));
+			stepperState = stepperState + stepperDirection;
+			break;
+		}
 	}
 	//CHECK STEPPER STATE OVERFLOW
-	if (stepperState>3) {
-		stepperState  =0;
+	if (stepperState > 3) {
+		stepperState = 0;
 	}
-	else if (stepperState<0) {
+	else if (stepperState < 0) {
 		stepperState = 3;
 	}
 }
@@ -152,53 +172,195 @@ enum State {
 	PASS_A,
 	PASS_AB,
 	PASS_ABC,
+	COUNTDOWN,
+	LOCK,
+	ARMED,
 	PASS_C,
 	PASS_CB,
 	PASS_CBA,
-	ARMED
+	ALARM,
+	UNLOCK
 };
 
 enum State state = DISSARMED;
 
-void stateMachine() {
+void stateMachine(uint8_t falling) {
 	switch(state) {
-		case DISSARMED:
+		case DISSARMED: {
+			if (falling & (1 << PINB0)) {
+				char text[] = "A";
+				dispText(0x46, false, text, sizeof(text));
+				state = PASS_A;
+			} else {
+				state = DISSARMED;  // just wait
+			}
+			break;
+		}
+		case PASS_A: {
+			if (falling & (1 << PINB1)) {
+				char text[] = "B";
+				dispText(0x47, false, text, sizeof(text));
+				state = PASS_AB;
+			} else if (falling & ((1 << PINB0) | (1 << PINB2))) {
+				char text[] = "   ";
+				dispText(0x46, false, text, sizeof(text));
+				state = DISSARMED;
+			} else {
+				state = PASS_A;
+			}
+			break;
+		}
+		case PASS_AB: {
+			if (falling & (1 << PINB2)) {
+				char text[] = "C";
+				dispText(0x48, false, text, sizeof(text));
+				state = PASS_ABC;
+			} else if (falling & ((1 << PINB0) | (1 << PINB1))) {
+				char text[] = "   ";
+				dispText(0x46, false, text, sizeof(text));
+				state = DISSARMED;
+			} else {
+				
+				state = PASS_AB;
+			}
+			break;
+		}
+		case PASS_ABC: {
+			state = COUNTDOWN;
+			char text[] = "Cd:";
+			dispText(0x4A, false, text, sizeof(text));
+			break;
+		}
+		case COUNTDOWN: {
+			if (count >= 1000) {
+				ones = countdown_var % 10;
+				tens = (countdown_var / 10) % 10;
+				char text[] = {char(0b00110000 | tens), char(0b00110000 | ones), '/0'};
+				dispText(0x4E, false, text, sizeof(text));		
+				count = 0;
+				countdown_var++;
+			} else {
+				count++;
+			}
+			
+			if (countdown_var >= 11) {
+				countdown_var = 0;
+				count = 0;
+				state = LOCK;
+			}
+			break;
+		}
+		case LOCK: {
+			stepperDirection = 1;
+			for (uint16_t i = 0; i < 512; i++) {
+				_delay_ms(10);
+				stepperStateMachine();
+			}
+			PORTD &= ~((1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7));
+			char text[] = "ARMED    ";
+			dispText(0x00, false, text, sizeof(text));
+			char text1[] = "           ";
+			dispText(0x45, false, text1, sizeof(text1));
+			PORTB |= (1 << PINB4);
+			PORTB &= ~(1 << PINB5);
+			state = ARMED;
+			break;
+		}
+		case ARMED: {
+			if (falling & (1 << PINB2)) {
+				char text[] = "C";
+				dispText(0x46, false, text, sizeof(text));		
+				state = PASS_C;
+			} else {			
+				state = ARMED;
+			}
+			break;
+		}
+		case PASS_C: {
+			if (falling_edges & (1 << PINB1)) {
+				char text[] = "B";
+				dispText(0x47, false, text, sizeof(text));	
+				state = PASS_CB;
+			} else if (falling_edges & ((1 << PINB0) | (1 << PINB2))) {
+				char text[] = "   ";
+				dispText(0x46, false, text, sizeof(text));	
+				state = ALARM;
+			} else {
+				state = PASS_C;
+			}
+			break;
+		}
+		case PASS_CB: {
+			if (falling_edges & (1 << PINB0)) {
+				char text[] = "A";
+				dispText(0x48, false, text, sizeof(text));
+				state = PASS_CBA;
+			} else if (falling_edges & ((1 << PINB1) | (1 << PINB2))) {
+				char text[] = "   ";
+				dispText(0x46, false, text, sizeof(text));
+				state = ALARM;
+			} else {		
+				state = PASS_CB;
+			}
+			break;
+		}
+		case PASS_CBA: {
+			blink_red = false;
+			count = 0;
+			PORTB &= ~(1 << PINB3); // turning off the alarm
+			PORTB |= (1 << PINB4);
+			state = UNLOCK;
+			break;
+		}
+		case ALARM: {
+			PORTB |= (1 << PINB3); // turning on the alarm
+			blink_red = true;
+			state = ARMED;
+			break;
+		}
+		case UNLOCK: {
+			stepperDirection = -1;
+			for (uint16_t i = 0; i < 512; i++) {
+				_delay_ms(10);
+				stepperStateMachine();
+			}
+			PORTB &= ~(1 << PINB4);
+			PORTB |= 1 << PINB5;
+			char text[] = "DISSARMED";
+			dispText(0x00, false, text, sizeof(text));
+			char text1[] = "         ";
+			dispText(0x46, false, text1, sizeof(text));
+			state = DISSARMED;
+			break; 
+		}
+		default: {
 		
 			break;
-		case PASS_A:
 		
-			break;
-		case PASS_AB:
-		
-			break;
-		case PASS_ABC:
-		
-			break;
-		case PASS_C:
-		
-			break;
-		case PASS_CB:
-		
-			break;
-		case PASS_CBA:
-		
-			break;
-		case ARMED:
-		
-			break;
+		}
+	}
+	
+	if (blink_red) {
+		if (count >= 250) {
+			PORTB ^= (1 << PINB4);
+			count = 0;
+		}
+		count++;
 	}
 }
 
-ISR(INT0_vect) {
-	softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
-	stateMachine();
+ISR(TIMER1_COMPA_vect) {
+	//uint8_t falling = softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
+	//stateMachine(falling);
+    uint8_t falling = softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
+	stateMachine(falling);
 }
 
 int main(void)
 {
 	// Data direction register declaration
 	DDRD = (1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7); // PIND4-7 stepper motor output GPIO
-	DDRB = (0 << PINB0) | (0 << PINB1) | (0 << PINB2) | (1 << PINB3) | (1 << PINB4); // PINB0-2 button input GPIO, PINB3 active buzzer output GPIO, PINB4 LED output GPIO
+	DDRB = (0 << PINB0) | (0 << PINB1) | (0 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5); // PINB0-2 button input GPIO, PINB3 active buzzer output GPIO, PINB4-5 LED output GPIO
 	
 	// LCD code
 	//Configure Bit Rate (TWBR and TWSR)
@@ -228,6 +390,13 @@ int main(void)
 	_delay_ms(2);
 	LCD_Command(0x0C); //Display no cursor
 	LCD_Command(0x06); //Automatic Increment
+	
+	// LCD initial message
+	char text[] = "DISSARMED";
+	dispText(0x00, true, text, sizeof(text));
+	char text1[] = "CODE:    ";
+	dispText(0x40, false, text1, sizeof(text1));
+	PORTB |= (1 << PINB5);
 
 	// Timer 1 Initialization
 	//Configure Timer 1
