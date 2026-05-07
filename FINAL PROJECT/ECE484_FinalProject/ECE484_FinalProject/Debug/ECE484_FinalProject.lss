@@ -3,39 +3,39 @@ ECE484_FinalProject.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000060  00800100  00000956  000009ea  2**0
+  0 .data         00000060  00800100  00000b58  00000bec  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000956  00000000  00000000  00000094  2**1
+  1 .text         00000b58  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000017  00800160  00800160  00000a4a  2**0
+  2 .bss          00000018  00800160  00800160  00000c4c  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000a4a  2**0
+  3 .comment      00000030  00000000  00000000  00000c4c  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000a7c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000c7c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000078  00000000  00000000  00000abc  2**0
+  5 .debug_aranges 00000088  00000000  00000000  00000cbc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000140d  00000000  00000000  00000b34  2**0
+  6 .debug_info   000014fb  00000000  00000000  00000d44  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000835  00000000  00000000  00001f41  2**0
+  7 .debug_abbrev 00000855  00000000  00000000  0000223f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000008ca  00000000  00000000  00002776  2**0
+  8 .debug_line   00000970  00000000  00000000  00002a94  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001c8  00000000  00000000  00003040  2**2
+  9 .debug_frame  00000268  00000000  00000000  00003404  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000675  00000000  00000000  00003208  2**0
+ 10 .debug_str    000006b8  00000000  00000000  0000366c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000007a0  00000000  00000000  0000387d  2**0
+ 11 .debug_loc    000009eb  00000000  00000000  00003d24  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000080  00000000  00000000  0000401d  2**0
+ 12 .debug_ranges 00000090  00000000  00000000  0000470f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	0c 94 40 00 	jmp	0x80	; 0x80 <__ctors_end>
-   4:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
-   8:	0c 94 ad 03 	jmp	0x75a	; 0x75a <__vector_2>
+   4:	0c 94 0f 04 	jmp	0x81e	; 0x81e <__vector_1>
+   8:	0c 94 b2 03 	jmp	0x764	; 0x764 <__vector_2>
    c:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   10:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   14:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
@@ -51,10 +51,10 @@ Disassembly of section .text:
   3c:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   40:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   44:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
-  48:	0c 94 cf 03 	jmp	0x79e	; 0x79e <__vector_18>
+  48:	0c 94 d4 03 	jmp	0x7a8	; 0x7a8 <__vector_18>
   4c:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
-  50:	0c 94 c0 03 	jmp	0x780	; 0x780 <__vector_20>
-  54:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
+  50:	0c 94 c5 03 	jmp	0x78a	; 0x78a <__vector_20>
+  54:	0c 94 21 04 	jmp	0x842	; 0x842 <__vector_21>
   58:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   5c:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   60:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
@@ -84,8 +84,8 @@ Disassembly of section .text:
   8c:	11 e0       	ldi	r17, 0x01	; 1
   8e:	a0 e0       	ldi	r26, 0x00	; 0
   90:	b1 e0       	ldi	r27, 0x01	; 1
-  92:	e6 e5       	ldi	r30, 0x56	; 86
-  94:	f9 e0       	ldi	r31, 0x09	; 9
+  92:	e8 e5       	ldi	r30, 0x58	; 88
+  94:	fb e0       	ldi	r31, 0x0B	; 11
   96:	02 c0       	rjmp	.+4      	; 0x9c <__do_copy_data+0x10>
   98:	05 90       	lpm	r0, Z+
   9a:	0d 92       	st	X+, r0
@@ -103,11 +103,11 @@ Disassembly of section .text:
   aa:	1d 92       	st	X+, r1
 
 000000ac <.do_clear_bss_start>:
-  ac:	a7 37       	cpi	r26, 0x77	; 119
+  ac:	a8 37       	cpi	r26, 0x78	; 120
   ae:	b2 07       	cpc	r27, r18
   b0:	e1 f7       	brne	.-8      	; 0xaa <.do_clear_bss_loop>
-  b2:	0e 94 0a 04 	call	0x814	; 0x814 <main>
-  b6:	0c 94 a9 04 	jmp	0x952	; 0x952 <_exit>
+  b2:	0e 94 e4 04 	call	0x9c8	; 0x9c8 <main>
+  b6:	0c 94 aa 05 	jmp	0xb54	; 0xb54 <_exit>
 
 000000ba <__bad_interrupt>:
   ba:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -122,7 +122,7 @@ Disassembly of section .text:
   be:	40 91 60 01 	lds	r20, 0x0160	; 0x800160 <__data_end>
   c2:	e4 2f       	mov	r30, r20
   c4:	f0 e0       	ldi	r31, 0x00	; 0
-  c6:	e4 59       	subi	r30, 0x94	; 148
+  c6:	e3 59       	subi	r30, 0x93	; 147
   c8:	fe 4f       	sbci	r31, 0xFE	; 254
   ca:	80 83       	st	Z, r24
 	//Loop through all historical switch samples to check for stable highs and lows
@@ -152,7 +152,7 @@ bool blink_red = false;
 		stable_high &= switch_array[i];
   d6:	e8 2f       	mov	r30, r24
   d8:	f0 e0       	ldi	r31, 0x00	; 0
-  da:	e4 59       	subi	r30, 0x94	; 148
+  da:	e3 59       	subi	r30, 0x93	; 147
   dc:	fe 4f       	sbci	r31, 0xFE	; 254
   de:	30 81       	ld	r19, Z
   e0:	93 23       	and	r25, r19
@@ -174,23 +174,23 @@ bool blink_red = false;
 		stable_low |= switch_array[i];
 	}
 	rising_edges = (~switch_states)&stable_high;
-  ea:	80 91 74 01 	lds	r24, 0x0174	; 0x800174 <switch_states>
+  ea:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <switch_states>
   ee:	80 95       	com	r24
   f0:	89 23       	and	r24, r25
-  f2:	80 93 76 01 	sts	0x0176, r24	; 0x800176 <rising_edges>
+  f2:	80 93 77 01 	sts	0x0177, r24	; 0x800177 <rising_edges>
 	//Detect Rising Edges
 	falling_edges = switch_states&(~stable_low);
-  f6:	80 91 74 01 	lds	r24, 0x0174	; 0x800174 <switch_states>
+  f6:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <switch_states>
   fa:	32 2f       	mov	r19, r18
   fc:	30 95       	com	r19
   fe:	83 23       	and	r24, r19
- 100:	80 93 75 01 	sts	0x0175, r24	; 0x800175 <falling_edges>
+ 100:	80 93 76 01 	sts	0x0176, r24	; 0x800176 <falling_edges>
 	//Detect Falling Edges
 	switch_states = stable_high|(switch_states&stable_low);
- 104:	80 91 74 01 	lds	r24, 0x0174	; 0x800174 <switch_states>
+ 104:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <switch_states>
  108:	28 23       	and	r18, r24
  10a:	92 2b       	or	r25, r18
- 10c:	90 93 74 01 	sts	0x0174, r25	; 0x800174 <switch_states>
+ 10c:	90 93 75 01 	sts	0x0175, r25	; 0x800175 <switch_states>
 	//Update switch states
 	//Update sample index and wrap if necessary
 	if(++sample_index>=kBufferLength)
@@ -203,7 +203,7 @@ bool blink_red = false;
  11c:	10 92 60 01 	sts	0x0160, r1	; 0x800160 <__data_end>
 	
 	return(falling_edges);
- 120:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <falling_edges>
+ 120:	80 91 76 01 	lds	r24, 0x0176	; 0x800176 <falling_edges>
 }
  124:	08 95       	ret
 
@@ -339,7 +339,7 @@ void dispText(uint8_t address, bool clear, const char* text) {
 	//set LCD
 	if (clear) {
  1ea:	66 23       	and	r22, r22
- 1ec:	19 f0       	breq	.+6      	; 0x1f4 <_Z8dispTexthbPKc+0x14>
+ 1ec:	49 f0       	breq	.+18     	; 0x200 <_Z8dispTexthbPKc+0x20>
 		LCD_Command(CLEAR_DISPLAY); //clear display
  1ee:	81 e0       	ldi	r24, 0x01	; 1
  1f0:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
@@ -355,8 +355,9 @@ void dispText(uint8_t address, bool clear, const char* text) {
  1fa:	f1 f7       	brne	.-4      	; 0x1f8 <_Z8dispTexthbPKc+0x18>
  1fc:	00 c0       	rjmp	.+0      	; 0x1fe <_Z8dispTexthbPKc+0x1e>
  1fe:	00 00       	nop
+		_delay_ms(2);
 	}
-	_delay_ms(2);
+	
 	LCD_Command(SET_ADDRESS|address); //set address
  200:	8c 2f       	mov	r24, r28
  202:	80 68       	ori	r24, 0x80	; 128
@@ -374,9 +375,9 @@ void dispText(uint8_t address, bool clear, const char* text) {
  216:	0e 94 b0 00 	call	0x160	; 0x160 <_Z11LCD_Displayh>
 		i++;
  21a:	cf 5f       	subi	r28, 0xFF	; 255
-		LCD_Command(CLEAR_DISPLAY); //clear display
+		_delay_ms(2);
 	}
-	_delay_ms(2);
+	
 	LCD_Command(SET_ADDRESS|address); //set address
 	uint8_t i = 0;
 	while (text[i] != '\0') {
@@ -395,7 +396,7 @@ void dispText(uint8_t address, bool clear, const char* text) {
 void stepperStateMachine(){
 	//STATE MACHINE FOR UNL2003 FULL STEP MODE
 	switch(stepperState){
- 226:	80 91 6b 01 	lds	r24, 0x016B	; 0x80016b <stepperState>
+ 226:	80 91 6c 01 	lds	r24, 0x016C	; 0x80016c <stepperState>
  22a:	81 30       	cpi	r24, 0x01	; 1
  22c:	b9 f0       	breq	.+46     	; 0x25c <_Z19stepperStateMachinev+0x36>
  22e:	1c f4       	brge	.+6      	; 0x236 <_Z19stepperStateMachinev+0x10>
@@ -418,10 +419,10 @@ void stepperStateMachine(){
  248:	80 63       	ori	r24, 0x30	; 48
  24a:	8b b9       	out	0x0b, r24	; 11
 			stepperState = stepperState + stepperDirection;
- 24c:	90 91 6b 01 	lds	r25, 0x016B	; 0x80016b <stepperState>
- 250:	80 91 6a 01 	lds	r24, 0x016A	; 0x80016a <stepperDirection>
+ 24c:	90 91 6c 01 	lds	r25, 0x016C	; 0x80016c <stepperState>
+ 250:	80 91 6b 01 	lds	r24, 0x016B	; 0x80016b <stepperDirection>
  254:	89 0f       	add	r24, r25
- 256:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperState>
+ 256:	80 93 6c 01 	sts	0x016C, r24	; 0x80016c <stepperState>
 			break;
  25a:	29 c0       	rjmp	.+82     	; 0x2ae <_Z19stepperStateMachinev+0x88>
 		}
@@ -436,10 +437,10 @@ void stepperStateMachine(){
  264:	80 66       	ori	r24, 0x60	; 96
  266:	8b b9       	out	0x0b, r24	; 11
 			stepperState = stepperState + stepperDirection;
- 268:	90 91 6b 01 	lds	r25, 0x016B	; 0x80016b <stepperState>
- 26c:	80 91 6a 01 	lds	r24, 0x016A	; 0x80016a <stepperDirection>
+ 268:	90 91 6c 01 	lds	r25, 0x016C	; 0x80016c <stepperState>
+ 26c:	80 91 6b 01 	lds	r24, 0x016B	; 0x80016b <stepperDirection>
  270:	89 0f       	add	r24, r25
- 272:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperState>
+ 272:	80 93 6c 01 	sts	0x016C, r24	; 0x80016c <stepperState>
 			break;
  276:	1b c0       	rjmp	.+54     	; 0x2ae <_Z19stepperStateMachinev+0x88>
 		}
@@ -454,10 +455,10 @@ void stepperStateMachine(){
  280:	80 6c       	ori	r24, 0xC0	; 192
  282:	8b b9       	out	0x0b, r24	; 11
 			stepperState = stepperState + stepperDirection;
- 284:	90 91 6b 01 	lds	r25, 0x016B	; 0x80016b <stepperState>
- 288:	80 91 6a 01 	lds	r24, 0x016A	; 0x80016a <stepperDirection>
+ 284:	90 91 6c 01 	lds	r25, 0x016C	; 0x80016c <stepperState>
+ 288:	80 91 6b 01 	lds	r24, 0x016B	; 0x80016b <stepperDirection>
  28c:	89 0f       	add	r24, r25
- 28e:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperState>
+ 28e:	80 93 6c 01 	sts	0x016C, r24	; 0x80016c <stepperState>
 			break;
  292:	0d c0       	rjmp	.+26     	; 0x2ae <_Z19stepperStateMachinev+0x88>
 		}
@@ -472,20 +473,20 @@ void stepperStateMachine(){
  29c:	80 69       	ori	r24, 0x90	; 144
  29e:	8b b9       	out	0x0b, r24	; 11
 			stepperState = stepperState + stepperDirection;
- 2a0:	90 91 6b 01 	lds	r25, 0x016B	; 0x80016b <stepperState>
- 2a4:	80 91 6a 01 	lds	r24, 0x016A	; 0x80016a <stepperDirection>
+ 2a0:	90 91 6c 01 	lds	r25, 0x016C	; 0x80016c <stepperState>
+ 2a4:	80 91 6b 01 	lds	r24, 0x016B	; 0x80016b <stepperDirection>
  2a8:	89 0f       	add	r24, r25
- 2aa:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperState>
+ 2aa:	80 93 6c 01 	sts	0x016C, r24	; 0x80016c <stepperState>
 			break;
 		}
 	}
 	//CHECK STEPPER STATE OVERFLOW
 	if (stepperState > 3) {
- 2ae:	80 91 6b 01 	lds	r24, 0x016B	; 0x80016b <stepperState>
+ 2ae:	80 91 6c 01 	lds	r24, 0x016C	; 0x80016c <stepperState>
  2b2:	84 30       	cpi	r24, 0x04	; 4
  2b4:	1c f0       	brlt	.+6      	; 0x2bc <_Z19stepperStateMachinev+0x96>
 		stepperState = 0;
- 2b6:	10 92 6b 01 	sts	0x016B, r1	; 0x80016b <stepperState>
+ 2b6:	10 92 6c 01 	sts	0x016C, r1	; 0x80016c <stepperState>
  2ba:	08 95       	ret
 	}
 	else if (stepperState < 0) {
@@ -493,7 +494,7 @@ void stepperStateMachine(){
  2be:	1c f4       	brge	.+6      	; 0x2c6 <_Z19stepperStateMachinev+0xa0>
 		stepperState = 3;
  2c0:	83 e0       	ldi	r24, 0x03	; 3
- 2c2:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperState>
+ 2c2:	80 93 6c 01 	sts	0x016C, r24	; 0x80016c <stepperState>
  2c6:	08 95       	ret
 
 000002c8 <_Z12stateMachineh>:
@@ -512,25 +513,25 @@ void stateMachine(uint8_t falling) {
  2d4:	cd b7       	in	r28, 0x3d	; 61
  2d6:	de b7       	in	r29, 0x3e	; 62
 	first = !(previous_state == state);
- 2d8:	e0 91 64 01 	lds	r30, 0x0164	; 0x800164 <state>
+ 2d8:	e0 91 65 01 	lds	r30, 0x0165	; 0x800165 <state>
  2dc:	91 e0       	ldi	r25, 0x01	; 1
- 2de:	20 91 63 01 	lds	r18, 0x0163	; 0x800163 <previous_state>
+ 2de:	20 91 64 01 	lds	r18, 0x0164	; 0x800164 <previous_state>
  2e2:	2e 13       	cpse	r18, r30
  2e4:	01 c0       	rjmp	.+2      	; 0x2e8 <_Z12stateMachineh+0x20>
  2e6:	90 e0       	ldi	r25, 0x00	; 0
- 2e8:	90 93 62 01 	sts	0x0162, r25	; 0x800162 <first>
+ 2e8:	90 93 63 01 	sts	0x0163, r25	; 0x800163 <first>
 	if (first_override) {
- 2ec:	90 91 61 01 	lds	r25, 0x0161	; 0x800161 <first_override>
+ 2ec:	90 91 62 01 	lds	r25, 0x0162	; 0x800162 <first_override>
  2f0:	99 23       	and	r25, r25
  2f2:	29 f0       	breq	.+10     	; 0x2fe <_Z12stateMachineh+0x36>
 		first = true;
  2f4:	91 e0       	ldi	r25, 0x01	; 1
- 2f6:	90 93 62 01 	sts	0x0162, r25	; 0x800162 <first>
+ 2f6:	90 93 63 01 	sts	0x0163, r25	; 0x800163 <first>
 		first_override = false;
- 2fa:	10 92 61 01 	sts	0x0161, r1	; 0x800161 <first_override>
+ 2fa:	10 92 62 01 	sts	0x0162, r1	; 0x800162 <first_override>
 	}
 	previous_state = state;
- 2fe:	e0 93 63 01 	sts	0x0163, r30	; 0x800163 <previous_state>
+ 2fe:	e0 93 64 01 	sts	0x0164, r30	; 0x800164 <previous_state>
 	switch(state) {
  302:	4e 2f       	mov	r20, r30
  304:	50 e0       	ldi	r21, 0x00	; 0
@@ -542,10 +543,10 @@ void stateMachine(uint8_t falling) {
  310:	fa 01       	movw	r30, r20
  312:	ec 5c       	subi	r30, 0xCC	; 204
  314:	ff 4f       	sbci	r31, 0xFF	; 255
- 316:	0c 94 a3 04 	jmp	0x946	; 0x946 <__tablejump2__>
+ 316:	0c 94 95 05 	jmp	0xb2a	; 0xb2a <__tablejump2__>
 		case DISSARMED: {
 			if (first) {
- 31a:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 31a:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  31e:	88 23       	and	r24, r24
  320:	61 f0       	breq	.+24     	; 0x33a <_Z12stateMachineh+0x72>
 				dispText(0x00, true, "DISSARMED");
@@ -573,18 +574,18 @@ void stateMachine(uint8_t falling) {
  346:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				state = PASS_A;
  34a:	81 e0       	ldi	r24, 0x01	; 1
- 34c:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 34c:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  350:	b8 c1       	rjmp	.+880    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else {
 				state = DISSARMED;  // just wait
- 352:	10 92 64 01 	sts	0x0164, r1	; 0x800164 <state>
+ 352:	10 92 65 01 	sts	0x0165, r1	; 0x800165 <state>
  356:	b5 c1       	rjmp	.+874    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
 		}
 		case PASS_A: {
 			if (first) {
- 358:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 358:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  35c:	88 23       	and	r24, r24
  35e:	61 f0       	breq	.+24     	; 0x378 <_Z12stateMachineh+0xb0>
 				dispText(0x00, true, "DISSARMED");
@@ -612,26 +613,26 @@ void stateMachine(uint8_t falling) {
  384:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				state = PASS_AB;
  388:	82 e0       	ldi	r24, 0x02	; 2
- 38a:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 38a:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  38e:	99 c1       	rjmp	.+818    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else if (falling & ((1 << PINB0) | (1 << PINB2))) {
  390:	81 2f       	mov	r24, r17
  392:	85 70       	andi	r24, 0x05	; 5
  394:	19 f0       	breq	.+6      	; 0x39c <_Z12stateMachineh+0xd4>
 				state = DISSARMED;
- 396:	10 92 64 01 	sts	0x0164, r1	; 0x800164 <state>
+ 396:	10 92 65 01 	sts	0x0165, r1	; 0x800165 <state>
  39a:	93 c1       	rjmp	.+806    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else {
 				state = PASS_A;
  39c:	81 e0       	ldi	r24, 0x01	; 1
- 39e:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 39e:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  3a2:	8f c1       	rjmp	.+798    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
 		}
 		case PASS_AB: {
 			if (first) {
- 3a4:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 3a4:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  3a8:	88 23       	and	r24, r24
  3aa:	61 f0       	breq	.+24     	; 0x3c4 <_Z12stateMachineh+0xfc>
 				dispText(0x00, true, "DISSARMED");
@@ -659,26 +660,26 @@ void stateMachine(uint8_t falling) {
  3d0:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				state = PASS_ABC;
  3d4:	83 e0       	ldi	r24, 0x03	; 3
- 3d6:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 3d6:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  3da:	73 c1       	rjmp	.+742    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else if (falling & ((1 << PINB0) | (1 << PINB1))) {
  3dc:	81 2f       	mov	r24, r17
  3de:	83 70       	andi	r24, 0x03	; 3
  3e0:	19 f0       	breq	.+6      	; 0x3e8 <_Z12stateMachineh+0x120>
 				state = DISSARMED;
- 3e2:	10 92 64 01 	sts	0x0164, r1	; 0x800164 <state>
+ 3e2:	10 92 65 01 	sts	0x0165, r1	; 0x800165 <state>
  3e6:	6d c1       	rjmp	.+730    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else {
 				state = PASS_AB;
  3e8:	82 e0       	ldi	r24, 0x02	; 2
- 3ea:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 3ea:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  3ee:	69 c1       	rjmp	.+722    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
 		}
 		case PASS_ABC: {
 			if (first) {
- 3f0:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 3f0:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  3f4:	88 23       	and	r24, r24
  3f6:	61 f0       	breq	.+24     	; 0x410 <__EEPROM_REGION_LENGTH__+0x10>
 				dispText(0x00, true, "DISSARMED");
@@ -696,13 +697,13 @@ void stateMachine(uint8_t falling) {
 			}
 			state = COUNTDOWN;
  410:	84 e0       	ldi	r24, 0x04	; 4
- 412:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 412:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
 			break;
  416:	55 c1       	rjmp	.+682    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 		}
 		case COUNTDOWN: {
 			if (first) {
- 418:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 418:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  41c:	88 23       	and	r24, r24
  41e:	61 f0       	breq	.+24     	; 0x438 <__EEPROM_REGION_LENGTH__+0x38>
 				dispText(0x00, true, "DISSARMED");
@@ -719,8 +720,8 @@ void stateMachine(uint8_t falling) {
  434:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 			}
 			if (count >= 1000) {
- 438:	80 91 66 01 	lds	r24, 0x0166	; 0x800166 <count>
- 43c:	90 91 67 01 	lds	r25, 0x0167	; 0x800167 <count+0x1>
+ 438:	80 91 67 01 	lds	r24, 0x0167	; 0x800167 <count>
+ 43c:	90 91 68 01 	lds	r25, 0x0168	; 0x800168 <count+0x1>
  440:	88 3e       	cpi	r24, 0xE8	; 232
  442:	23 e0       	ldi	r18, 0x03	; 3
  444:	92 07       	cpc	r25, r18
@@ -742,7 +743,7 @@ void stateMachine(uint8_t falling) {
  464:	93 0f       	add	r25, r19
  466:	49 1b       	sub	r20, r25
  468:	94 2f       	mov	r25, r20
- 46a:	40 93 69 01 	sts	0x0169, r20	; 0x800169 <ones>
+ 46a:	40 93 6a 01 	sts	0x016A, r20	; 0x80016a <ones>
 				tens = (countdown_var / 10) % 10;
  46e:	26 95       	lsr	r18
  470:	26 95       	lsr	r18
@@ -760,7 +761,7 @@ void stateMachine(uint8_t falling) {
  488:	83 0f       	add	r24, r19
  48a:	28 1b       	sub	r18, r24
  48c:	82 2f       	mov	r24, r18
- 48e:	20 93 68 01 	sts	0x0168, r18	; 0x800168 <tens>
+ 48e:	20 93 69 01 	sts	0x0169, r18	; 0x800169 <tens>
 				char text[] = {char(0b00110000 | tens), char(0b00110000 | ones), '\0'};
  492:	19 82       	std	Y+1, r1	; 0x01
  494:	1a 82       	std	Y+2, r1	; 0x02
@@ -777,8 +778,8 @@ void stateMachine(uint8_t falling) {
  4a8:	8e e4       	ldi	r24, 0x4E	; 78
  4aa:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				count = 0;
- 4ae:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count+0x1>
- 4b2:	10 92 66 01 	sts	0x0166, r1	; 0x800166 <count>
+ 4ae:	10 92 68 01 	sts	0x0168, r1	; 0x800168 <count+0x1>
+ 4b2:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count>
 				countdown_var++;
  4b6:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  4ba:	8f 5f       	subi	r24, 0xFF	; 255
@@ -787,8 +788,8 @@ void stateMachine(uint8_t falling) {
 			} else {
 				count++;
  4c2:	01 96       	adiw	r24, 0x01	; 1
- 4c4:	90 93 67 01 	sts	0x0167, r25	; 0x800167 <count+0x1>
- 4c8:	80 93 66 01 	sts	0x0166, r24	; 0x800166 <count>
+ 4c4:	90 93 68 01 	sts	0x0168, r25	; 0x800168 <count+0x1>
+ 4c8:	80 93 67 01 	sts	0x0167, r24	; 0x800167 <count>
 			}
 			
 			if (countdown_var >= 11) {
@@ -799,11 +800,11 @@ void stateMachine(uint8_t falling) {
 				countdown_var = 0;
  4d6:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
 				count = 0;
- 4da:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count+0x1>
- 4de:	10 92 66 01 	sts	0x0166, r1	; 0x800166 <count>
+ 4da:	10 92 68 01 	sts	0x0168, r1	; 0x800168 <count+0x1>
+ 4de:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count>
 				state = LOCK;
  4e2:	85 e0       	ldi	r24, 0x05	; 5
- 4e4:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 4e4:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  4e8:	ec c0       	rjmp	.+472    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
@@ -812,12 +813,12 @@ void stateMachine(uint8_t falling) {
 			dispText(0x00, first, "LOCKING...");
  4ea:	41 e5       	ldi	r20, 0x51	; 81
  4ec:	51 e0       	ldi	r21, 0x01	; 1
- 4ee:	60 91 62 01 	lds	r22, 0x0162	; 0x800162 <first>
+ 4ee:	60 91 63 01 	lds	r22, 0x0163	; 0x800163 <first>
  4f2:	80 e0       	ldi	r24, 0x00	; 0
  4f4:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 			stepperDirection = 1;
  4f8:	81 e0       	ldi	r24, 0x01	; 1
- 4fa:	80 93 6a 01 	sts	0x016A, r24	; 0x80016a <stepperDirection>
+ 4fa:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperDirection>
 			for (uint16_t i = 0; i < 512; i++) {
  4fe:	00 e0       	ldi	r16, 0x00	; 0
  500:	10 e0       	ldi	r17, 0x00	; 0
@@ -860,13 +861,13 @@ void stateMachine(uint8_t falling) {
  530:	85 b9       	out	0x05, r24	; 5
 			state = ARMED;
  532:	86 e0       	ldi	r24, 0x06	; 6
- 534:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 534:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
 			break;
  538:	c4 c0       	rjmp	.+392    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 		}
 		case ARMED: {
 			if (first) {
- 53a:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 53a:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  53e:	88 23       	and	r24, r24
  540:	61 f0       	breq	.+24     	; 0x55a <__EEPROM_REGION_LENGTH__+0x15a>
 				dispText(0x00, true, "ARMED");
@@ -894,19 +895,19 @@ void stateMachine(uint8_t falling) {
  566:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				state = PASS_C;
  56a:	87 e0       	ldi	r24, 0x07	; 7
- 56c:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 56c:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  570:	a8 c0       	rjmp	.+336    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else {			
 				state = ARMED;
  572:	86 e0       	ldi	r24, 0x06	; 6
- 574:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 574:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  578:	a4 c0       	rjmp	.+328    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
 		}
 		case PASS_C: {
 			if (first) {
- 57a:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 57a:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  57e:	88 23       	and	r24, r24
  580:	61 f0       	breq	.+24     	; 0x59a <__EEPROM_REGION_LENGTH__+0x19a>
 				dispText(0x00, true, "ARMED");
@@ -924,7 +925,7 @@ void stateMachine(uint8_t falling) {
 			}
 			
 			if (falling_edges & (1 << PINB1)) {
- 59a:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <falling_edges>
+ 59a:	80 91 76 01 	lds	r24, 0x0176	; 0x800176 <falling_edges>
  59e:	81 ff       	sbrs	r24, 1
  5a0:	0a c0       	rjmp	.+20     	; 0x5b6 <__EEPROM_REGION_LENGTH__+0x1b6>
 				dispText(0x47, false, "B");	
@@ -935,27 +936,27 @@ void stateMachine(uint8_t falling) {
  5aa:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				state = PASS_CB;
  5ae:	88 e0       	ldi	r24, 0x08	; 8
- 5b0:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 5b0:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  5b4:	86 c0       	rjmp	.+268    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else if (falling_edges & ((1 << PINB0) | (1 << PINB2))) {
- 5b6:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <falling_edges>
+ 5b6:	80 91 76 01 	lds	r24, 0x0176	; 0x800176 <falling_edges>
  5ba:	85 70       	andi	r24, 0x05	; 5
  5bc:	21 f0       	breq	.+8      	; 0x5c6 <__EEPROM_REGION_LENGTH__+0x1c6>
 				state = ALARM;
  5be:	8a e0       	ldi	r24, 0x0A	; 10
- 5c0:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 5c0:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  5c4:	7e c0       	rjmp	.+252    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else {
 				state = PASS_C;
  5c6:	87 e0       	ldi	r24, 0x07	; 7
- 5c8:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 5c8:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  5cc:	7a c0       	rjmp	.+244    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
 		}
 		case PASS_CB: {
 			if (first) {
- 5ce:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 5ce:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  5d2:	88 23       	and	r24, r24
  5d4:	61 f0       	breq	.+24     	; 0x5ee <__EEPROM_REGION_LENGTH__+0x1ee>
 				dispText(0x00, true, "ARMED");
@@ -973,7 +974,7 @@ void stateMachine(uint8_t falling) {
 			}
 
 			if (falling_edges & (1 << PINB0)) {
- 5ee:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <falling_edges>
+ 5ee:	80 91 76 01 	lds	r24, 0x0176	; 0x800176 <falling_edges>
  5f2:	80 ff       	sbrs	r24, 0
  5f4:	0a c0       	rjmp	.+20     	; 0x60a <__EEPROM_REGION_LENGTH__+0x20a>
 				dispText(0x48, false, "A");
@@ -984,27 +985,27 @@ void stateMachine(uint8_t falling) {
  5fe:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 				state = PASS_CBA;
  602:	89 e0       	ldi	r24, 0x09	; 9
- 604:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 604:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  608:	5c c0       	rjmp	.+184    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else if (falling_edges & ((1 << PINB1) | (1 << PINB2))) {
- 60a:	80 91 75 01 	lds	r24, 0x0175	; 0x800175 <falling_edges>
+ 60a:	80 91 76 01 	lds	r24, 0x0176	; 0x800176 <falling_edges>
  60e:	86 70       	andi	r24, 0x06	; 6
  610:	21 f0       	breq	.+8      	; 0x61a <__EEPROM_REGION_LENGTH__+0x21a>
 				state = ALARM;
  612:	8a e0       	ldi	r24, 0x0A	; 10
- 614:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 614:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  618:	54 c0       	rjmp	.+168    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			} else {		
 				state = PASS_CB;
  61a:	88 e0       	ldi	r24, 0x08	; 8
- 61c:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 61c:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
  620:	50 c0       	rjmp	.+160    	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 			}
 			break;
 		}
 		case PASS_CBA: {
 			if (first) {
- 622:	80 91 62 01 	lds	r24, 0x0162	; 0x800162 <first>
+ 622:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <first>
  626:	88 23       	and	r24, r24
  628:	61 f0       	breq	.+24     	; 0x642 <__EEPROM_REGION_LENGTH__+0x242>
 				dispText(0x00, true, "ARMED");
@@ -1022,10 +1023,10 @@ void stateMachine(uint8_t falling) {
 			}
 
 			blink_red = false;
- 642:	10 92 65 01 	sts	0x0165, r1	; 0x800165 <blink_red>
+ 642:	10 92 66 01 	sts	0x0166, r1	; 0x800166 <blink_red>
 			count = 0;
- 646:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count+0x1>
- 64a:	10 92 66 01 	sts	0x0166, r1	; 0x800166 <count>
+ 646:	10 92 68 01 	sts	0x0168, r1	; 0x800168 <count+0x1>
+ 64a:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count>
 			PORTB &= ~(1 << PINB3); // turning off the alarm
  64e:	85 b1       	in	r24, 0x05	; 5
  650:	87 7f       	andi	r24, 0xF7	; 247
@@ -1036,7 +1037,7 @@ void stateMachine(uint8_t falling) {
  658:	85 b9       	out	0x05, r24	; 5
 			state = UNLOCK;
  65a:	8b e0       	ldi	r24, 0x0B	; 11
- 65c:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 65c:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
 			break;
  660:	30 c0       	rjmp	.+96     	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 		}
@@ -1047,10 +1048,10 @@ void stateMachine(uint8_t falling) {
  666:	85 b9       	out	0x05, r24	; 5
 			blink_red = true;
  668:	81 e0       	ldi	r24, 0x01	; 1
- 66a:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <blink_red>
+ 66a:	80 93 66 01 	sts	0x0166, r24	; 0x800166 <blink_red>
 			state = ARMED;
  66e:	86 e0       	ldi	r24, 0x06	; 6
- 670:	80 93 64 01 	sts	0x0164, r24	; 0x800164 <state>
+ 670:	80 93 65 01 	sts	0x0165, r24	; 0x800165 <state>
 			break;
  674:	26 c0       	rjmp	.+76     	; 0x6c2 <__EEPROM_REGION_LENGTH__+0x2c2>
 		}
@@ -1058,12 +1059,12 @@ void stateMachine(uint8_t falling) {
 			dispText(0x00, first, "UNLOCKING...");
  676:	4f e4       	ldi	r20, 0x4F	; 79
  678:	51 e0       	ldi	r21, 0x01	; 1
- 67a:	60 91 62 01 	lds	r22, 0x0162	; 0x800162 <first>
+ 67a:	60 91 63 01 	lds	r22, 0x0163	; 0x800163 <first>
  67e:	80 e0       	ldi	r24, 0x00	; 0
  680:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 			stepperDirection = -1;
  684:	8f ef       	ldi	r24, 0xFF	; 255
- 686:	80 93 6a 01 	sts	0x016A, r24	; 0x80016a <stepperDirection>
+ 686:	80 93 6b 01 	sts	0x016B, r24	; 0x80016b <stepperDirection>
 			for (uint16_t i = 0; i < 512; i++) {
  68a:	00 e0       	ldi	r16, 0x00	; 0
  68c:	10 e0       	ldi	r17, 0x00	; 0
@@ -1105,19 +1106,19 @@ void stateMachine(uint8_t falling) {
  6ba:	80 62       	ori	r24, 0x20	; 32
  6bc:	85 b9       	out	0x05, r24	; 5
 			state = DISSARMED;
- 6be:	10 92 64 01 	sts	0x0164, r1	; 0x800164 <state>
+ 6be:	10 92 65 01 	sts	0x0165, r1	; 0x800165 <state>
 			break;
 		
 		}
 	}
 	
 	if (blink_red) {
- 6c2:	80 91 65 01 	lds	r24, 0x0165	; 0x800165 <blink_red>
+ 6c2:	80 91 66 01 	lds	r24, 0x0166	; 0x800166 <blink_red>
  6c6:	88 23       	and	r24, r24
  6c8:	c1 f0       	breq	.+48     	; 0x6fa <__EEPROM_REGION_LENGTH__+0x2fa>
 		if (count >= 250) {
- 6ca:	80 91 66 01 	lds	r24, 0x0166	; 0x800166 <count>
- 6ce:	90 91 67 01 	lds	r25, 0x0167	; 0x800167 <count+0x1>
+ 6ca:	80 91 67 01 	lds	r24, 0x0167	; 0x800167 <count>
+ 6ce:	90 91 68 01 	lds	r25, 0x0168	; 0x800168 <count+0x1>
  6d2:	8a 3f       	cpi	r24, 0xFA	; 250
  6d4:	91 05       	cpc	r25, r1
  6d6:	40 f0       	brcs	.+16     	; 0x6e8 <__EEPROM_REGION_LENGTH__+0x2e8>
@@ -1127,15 +1128,15 @@ void stateMachine(uint8_t falling) {
  6dc:	89 27       	eor	r24, r25
  6de:	85 b9       	out	0x05, r24	; 5
 			count = 0;
- 6e0:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count+0x1>
- 6e4:	10 92 66 01 	sts	0x0166, r1	; 0x800166 <count>
+ 6e0:	10 92 68 01 	sts	0x0168, r1	; 0x800168 <count+0x1>
+ 6e4:	10 92 67 01 	sts	0x0167, r1	; 0x800167 <count>
 		}
 		count++;
- 6e8:	80 91 66 01 	lds	r24, 0x0166	; 0x800166 <count>
- 6ec:	90 91 67 01 	lds	r25, 0x0167	; 0x800167 <count+0x1>
+ 6e8:	80 91 67 01 	lds	r24, 0x0167	; 0x800167 <count>
+ 6ec:	90 91 68 01 	lds	r25, 0x0168	; 0x800168 <count+0x1>
  6f0:	01 96       	adiw	r24, 0x01	; 1
- 6f2:	90 93 67 01 	sts	0x0167, r25	; 0x800167 <count+0x1>
- 6f6:	80 93 66 01 	sts	0x0166, r24	; 0x800166 <count>
+ 6f2:	90 93 68 01 	sts	0x0168, r25	; 0x800168 <count+0x1>
+ 6f6:	80 93 67 01 	sts	0x0167, r24	; 0x800167 <count>
 	}
 	
 }
@@ -1176,348 +1177,638 @@ ISR(TIMER1_COMPA_vect) {
  730:	0e 94 5f 00 	call	0xbe	; 0xbe <_Z16softwareDebounceh>
 	stateMachine(falling);
  734:	0e 94 64 01 	call	0x2c8	; 0x2c8 <_Z12stateMachineh>
+	ADCSRA |= (1 << ADSC); //starting the ADC conversion again
+ 738:	ea e7       	ldi	r30, 0x7A	; 122
+ 73a:	f0 e0       	ldi	r31, 0x00	; 0
+ 73c:	80 81       	ld	r24, Z
+ 73e:	80 64       	ori	r24, 0x40	; 64
+ 740:	80 83       	st	Z, r24
 }
- 738:	ff 91       	pop	r31
- 73a:	ef 91       	pop	r30
- 73c:	bf 91       	pop	r27
- 73e:	af 91       	pop	r26
- 740:	9f 91       	pop	r25
- 742:	8f 91       	pop	r24
- 744:	7f 91       	pop	r23
- 746:	6f 91       	pop	r22
- 748:	5f 91       	pop	r21
- 74a:	4f 91       	pop	r20
- 74c:	3f 91       	pop	r19
- 74e:	2f 91       	pop	r18
- 750:	0f 90       	pop	r0
- 752:	0f be       	out	0x3f, r0	; 63
- 754:	0f 90       	pop	r0
- 756:	1f 90       	pop	r1
- 758:	18 95       	reti
+ 742:	ff 91       	pop	r31
+ 744:	ef 91       	pop	r30
+ 746:	bf 91       	pop	r27
+ 748:	af 91       	pop	r26
+ 74a:	9f 91       	pop	r25
+ 74c:	8f 91       	pop	r24
+ 74e:	7f 91       	pop	r23
+ 750:	6f 91       	pop	r22
+ 752:	5f 91       	pop	r21
+ 754:	4f 91       	pop	r20
+ 756:	3f 91       	pop	r19
+ 758:	2f 91       	pop	r18
+ 75a:	0f 90       	pop	r0
+ 75c:	0f be       	out	0x3f, r0	; 63
+ 75e:	0f 90       	pop	r0
+ 760:	1f 90       	pop	r1
+ 762:	18 95       	reti
 
-0000075a <__vector_2>:
+00000764 <__vector_2>:
 
 
 /*---------- MODULE E FUNCTIONS ----------*/
 ISR(INT1_vect) {
- 75a:	1f 92       	push	r1
- 75c:	0f 92       	push	r0
- 75e:	0f b6       	in	r0, 0x3f	; 63
- 760:	0f 92       	push	r0
- 762:	11 24       	eor	r1, r1
- 764:	8f 93       	push	r24
+ 764:	1f 92       	push	r1
+ 766:	0f 92       	push	r0
+ 768:	0f b6       	in	r0, 0x3f	; 63
+ 76a:	0f 92       	push	r0
+ 76c:	11 24       	eor	r1, r1
+ 76e:	8f 93       	push	r24
 	if (UCSR0A & (1 << UDRE0)) { //check if transmit buffer is empty
- 766:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
- 76a:	85 ff       	sbrs	r24, 5
- 76c:	03 c0       	rjmp	.+6      	; 0x774 <__vector_2+0x1a>
+ 770:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 774:	85 ff       	sbrs	r24, 5
+ 776:	03 c0       	rjmp	.+6      	; 0x77e <__vector_2+0x1a>
 		UDR0 = 0b11110000; //send code
- 76e:	80 ef       	ldi	r24, 0xF0	; 240
- 770:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
-		//UDR0 = 0b01010100; //send code
-		//dispText(0x00, true, "TEST TEST");
-		//_delay_ms(2000);
+ 778:	80 ef       	ldi	r24, 0xF0	; 240
+ 77a:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+	}
+}
+ 77e:	8f 91       	pop	r24
+ 780:	0f 90       	pop	r0
+ 782:	0f be       	out	0x3f, r0	; 63
+ 784:	0f 90       	pop	r0
+ 786:	1f 90       	pop	r1
+ 788:	18 95       	reti
+
+0000078a <__vector_20>:
+
+ISR(USART_TX_vect) {
+ 78a:	1f 92       	push	r1
+ 78c:	0f 92       	push	r0
+ 78e:	0f b6       	in	r0, 0x3f	; 63
+ 790:	0f 92       	push	r0
+ 792:	11 24       	eor	r1, r1
+ 794:	8f 93       	push	r24
+	//change mode to receiver
+	UCSR0B = (0 << TXCIE0)|(0 << TXEN0)|(1 << RXCIE0)|(1 << RXEN0); //enabling reciever mode and interrupt
+ 796:	80 e9       	ldi	r24, 0x90	; 144
+ 798:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+}
+ 79c:	8f 91       	pop	r24
+ 79e:	0f 90       	pop	r0
+ 7a0:	0f be       	out	0x3f, r0	; 63
+ 7a2:	0f 90       	pop	r0
+ 7a4:	1f 90       	pop	r1
+ 7a6:	18 95       	reti
+
+000007a8 <__vector_18>:
+
+ISR(USART_RX_vect) {
+ 7a8:	1f 92       	push	r1
+ 7aa:	0f 92       	push	r0
+ 7ac:	0f b6       	in	r0, 0x3f	; 63
+ 7ae:	0f 92       	push	r0
+ 7b0:	11 24       	eor	r1, r1
+ 7b2:	2f 93       	push	r18
+ 7b4:	3f 93       	push	r19
+ 7b6:	4f 93       	push	r20
+ 7b8:	5f 93       	push	r21
+ 7ba:	6f 93       	push	r22
+ 7bc:	7f 93       	push	r23
+ 7be:	8f 93       	push	r24
+ 7c0:	9f 93       	push	r25
+ 7c2:	af 93       	push	r26
+ 7c4:	bf 93       	push	r27
+ 7c6:	ef 93       	push	r30
+ 7c8:	ff 93       	push	r31
+	uint8_t recievedData = UDR0;
+ 7ca:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+	if (recievedData == 0b00001111) {
+ 7ce:	8f 30       	cpi	r24, 0x0F	; 15
+ 7d0:	a9 f4       	brne	.+42     	; 0x7fc <__vector_18+0x54>
+		UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
+ 7d2:	88 e4       	ldi	r24, 0x48	; 72
+ 7d4:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+		dispText(0x00, true, "OK");
+ 7d8:	4c e5       	ldi	r20, 0x5C	; 92
+ 7da:	51 e0       	ldi	r21, 0x01	; 1
+ 7dc:	61 e0       	ldi	r22, 0x01	; 1
+ 7de:	80 e0       	ldi	r24, 0x00	; 0
+ 7e0:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
+ 7e4:	2f ef       	ldi	r18, 0xFF	; 255
+ 7e6:	87 ea       	ldi	r24, 0xA7	; 167
+ 7e8:	91 e6       	ldi	r25, 0x61	; 97
+ 7ea:	21 50       	subi	r18, 0x01	; 1
+ 7ec:	80 40       	sbci	r24, 0x00	; 0
+ 7ee:	90 40       	sbci	r25, 0x00	; 0
+ 7f0:	e1 f7       	brne	.-8      	; 0x7ea <__vector_18+0x42>
+ 7f2:	00 c0       	rjmp	.+0      	; 0x7f4 <__vector_18+0x4c>
+ 7f4:	00 00       	nop
+		_delay_ms(2000);
+		first_override = true;
+ 7f6:	81 e0       	ldi	r24, 0x01	; 1
+ 7f8:	80 93 62 01 	sts	0x0162, r24	; 0x800162 <first_override>
+	}
+}
+ 7fc:	ff 91       	pop	r31
+ 7fe:	ef 91       	pop	r30
+ 800:	bf 91       	pop	r27
+ 802:	af 91       	pop	r26
+ 804:	9f 91       	pop	r25
+ 806:	8f 91       	pop	r24
+ 808:	7f 91       	pop	r23
+ 80a:	6f 91       	pop	r22
+ 80c:	5f 91       	pop	r21
+ 80e:	4f 91       	pop	r20
+ 810:	3f 91       	pop	r19
+ 812:	2f 91       	pop	r18
+ 814:	0f 90       	pop	r0
+ 816:	0f be       	out	0x3f, r0	; 63
+ 818:	0f 90       	pop	r0
+ 81a:	1f 90       	pop	r1
+ 81c:	18 95       	reti
+
+0000081e <__vector_1>:
+/*---------- END MODULE E FUNCTIONS ----------*/
+
+/*---------- MODULE B FUNCTIONS ----------*/
+
+ISR(INT0_vect) {
+ 81e:	1f 92       	push	r1
+ 820:	0f 92       	push	r0
+ 822:	0f b6       	in	r0, 0x3f	; 63
+ 824:	0f 92       	push	r0
+ 826:	11 24       	eor	r1, r1
+ 828:	8f 93       	push	r24
+ 82a:	9f 93       	push	r25
+	PORTC ^= (1 << PINC1); //toggle output to led
+ 82c:	98 b1       	in	r25, 0x08	; 8
+ 82e:	82 e0       	ldi	r24, 0x02	; 2
+ 830:	89 27       	eor	r24, r25
+ 832:	88 b9       	out	0x08, r24	; 8
+}
+ 834:	9f 91       	pop	r25
+ 836:	8f 91       	pop	r24
+ 838:	0f 90       	pop	r0
+ 83a:	0f be       	out	0x3f, r0	; 63
+ 83c:	0f 90       	pop	r0
+ 83e:	1f 90       	pop	r1
+ 840:	18 95       	reti
+
+00000842 <__vector_21>:
+
+uint8_t countlcd = 0;
+ISR(ADC_vect) {
+ 842:	1f 92       	push	r1
+ 844:	0f 92       	push	r0
+ 846:	0f b6       	in	r0, 0x3f	; 63
+ 848:	0f 92       	push	r0
+ 84a:	11 24       	eor	r1, r1
+ 84c:	ef 92       	push	r14
+ 84e:	ff 92       	push	r15
+ 850:	0f 93       	push	r16
+ 852:	1f 93       	push	r17
+ 854:	2f 93       	push	r18
+ 856:	3f 93       	push	r19
+ 858:	4f 93       	push	r20
+ 85a:	5f 93       	push	r21
+ 85c:	6f 93       	push	r22
+ 85e:	7f 93       	push	r23
+ 860:	8f 93       	push	r24
+ 862:	9f 93       	push	r25
+ 864:	af 93       	push	r26
+ 866:	bf 93       	push	r27
+ 868:	ef 93       	push	r30
+ 86a:	ff 93       	push	r31
+ 86c:	cf 93       	push	r28
+ 86e:	df 93       	push	r29
+ 870:	cd b7       	in	r28, 0x3d	; 61
+ 872:	de b7       	in	r29, 0x3e	; 62
+ 874:	25 97       	sbiw	r28, 0x05	; 5
+ 876:	de bf       	out	0x3e, r29	; 62
+ 878:	cd bf       	out	0x3d, r28	; 61
+	uint16_t ADCVal = ADCH;
+ 87a:	40 91 79 00 	lds	r20, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
+	
+	const uint16_t stepSize = 196; //step size of 196 (approximating floats)
+	uint16_t voltage = ADCVal * stepSize;
+ 87e:	24 ec       	ldi	r18, 0xC4	; 196
+ 880:	42 9f       	mul	r20, r18
+ 882:	a0 01       	movw	r20, r0
+ 884:	11 24       	eor	r1, r1
+	
+	uint8_t ones = (voltage/10000) % 10;
+ 886:	9a 01       	movw	r18, r20
+ 888:	32 95       	swap	r19
+ 88a:	22 95       	swap	r18
+ 88c:	2f 70       	andi	r18, 0x0F	; 15
+ 88e:	23 27       	eor	r18, r19
+ 890:	3f 70       	andi	r19, 0x0F	; 15
+ 892:	23 27       	eor	r18, r19
+ 894:	a7 e4       	ldi	r26, 0x47	; 71
+ 896:	b3 e0       	ldi	r27, 0x03	; 3
+ 898:	0e 94 9b 05 	call	0xb36	; 0xb36 <__umulhisi3>
+ 89c:	8c 01       	movw	r16, r24
+ 89e:	16 95       	lsr	r17
+ 8a0:	07 95       	ror	r16
+ 8a2:	16 95       	lsr	r17
+ 8a4:	07 95       	ror	r16
+ 8a6:	16 95       	lsr	r17
+ 8a8:	07 95       	ror	r16
+	uint8_t onetens = (voltage/1000) % 10;
+ 8aa:	9a 01       	movw	r18, r20
+ 8ac:	36 95       	lsr	r19
+ 8ae:	27 95       	ror	r18
+ 8b0:	36 95       	lsr	r19
+ 8b2:	27 95       	ror	r18
+ 8b4:	36 95       	lsr	r19
+ 8b6:	27 95       	ror	r18
+ 8b8:	a5 ec       	ldi	r26, 0xC5	; 197
+ 8ba:	b0 e2       	ldi	r27, 0x20	; 32
+ 8bc:	0e 94 9b 05 	call	0xb36	; 0xb36 <__umulhisi3>
+ 8c0:	7c 01       	movw	r14, r24
+ 8c2:	f6 94       	lsr	r15
+ 8c4:	e7 94       	ror	r14
+ 8c6:	f6 94       	lsr	r15
+ 8c8:	e7 94       	ror	r14
+ 8ca:	f6 94       	lsr	r15
+ 8cc:	e7 94       	ror	r14
+ 8ce:	f6 94       	lsr	r15
+ 8d0:	e7 94       	ror	r14
+ 8d2:	97 01       	movw	r18, r14
+ 8d4:	ad ec       	ldi	r26, 0xCD	; 205
+ 8d6:	bc ec       	ldi	r27, 0xCC	; 204
+ 8d8:	0e 94 9b 05 	call	0xb36	; 0xb36 <__umulhisi3>
+ 8dc:	fc 01       	movw	r30, r24
+ 8de:	f6 95       	lsr	r31
+ 8e0:	e7 95       	ror	r30
+ 8e2:	f6 95       	lsr	r31
+ 8e4:	e7 95       	ror	r30
+ 8e6:	f6 95       	lsr	r31
+ 8e8:	e7 95       	ror	r30
+ 8ea:	cf 01       	movw	r24, r30
+ 8ec:	88 0f       	add	r24, r24
+ 8ee:	99 1f       	adc	r25, r25
+ 8f0:	ee 0f       	add	r30, r30
+ 8f2:	ff 1f       	adc	r31, r31
+ 8f4:	ee 0f       	add	r30, r30
+ 8f6:	ff 1f       	adc	r31, r31
+ 8f8:	ee 0f       	add	r30, r30
+ 8fa:	ff 1f       	adc	r31, r31
+ 8fc:	e8 0f       	add	r30, r24
+ 8fe:	f9 1f       	adc	r31, r25
+ 900:	c7 01       	movw	r24, r14
+ 902:	8e 1b       	sub	r24, r30
+ 904:	9f 0b       	sbc	r25, r31
+ 906:	fc 01       	movw	r30, r24
+	uint8_t onehundreds = (voltage/100) % 10;
+ 908:	9a 01       	movw	r18, r20
+ 90a:	36 95       	lsr	r19
+ 90c:	27 95       	ror	r18
+ 90e:	36 95       	lsr	r19
+ 910:	27 95       	ror	r18
+ 912:	ab e7       	ldi	r26, 0x7B	; 123
+ 914:	b4 e1       	ldi	r27, 0x14	; 20
+ 916:	0e 94 9b 05 	call	0xb36	; 0xb36 <__umulhisi3>
+ 91a:	ac 01       	movw	r20, r24
+ 91c:	56 95       	lsr	r21
+ 91e:	47 95       	ror	r20
+ 920:	9a 01       	movw	r18, r20
+ 922:	ad ec       	ldi	r26, 0xCD	; 205
+ 924:	bc ec       	ldi	r27, 0xCC	; 204
+ 926:	0e 94 9b 05 	call	0xb36	; 0xb36 <__umulhisi3>
+ 92a:	96 95       	lsr	r25
+ 92c:	87 95       	ror	r24
+ 92e:	96 95       	lsr	r25
+ 930:	87 95       	ror	r24
+ 932:	96 95       	lsr	r25
+ 934:	87 95       	ror	r24
+ 936:	9c 01       	movw	r18, r24
+ 938:	22 0f       	add	r18, r18
+ 93a:	33 1f       	adc	r19, r19
+ 93c:	88 0f       	add	r24, r24
+ 93e:	99 1f       	adc	r25, r25
+ 940:	88 0f       	add	r24, r24
+ 942:	99 1f       	adc	r25, r25
+ 944:	88 0f       	add	r24, r24
+ 946:	99 1f       	adc	r25, r25
+ 948:	82 0f       	add	r24, r18
+ 94a:	93 1f       	adc	r25, r19
+ 94c:	da 01       	movw	r26, r20
+ 94e:	a8 1b       	sub	r26, r24
+ 950:	b9 0b       	sbc	r27, r25
+ 952:	cd 01       	movw	r24, r26
+	if (countlcd >= 100) {
+ 954:	20 91 61 01 	lds	r18, 0x0161	; 0x800161 <countlcd>
+ 958:	24 36       	cpi	r18, 0x64	; 100
+ 95a:	b8 f0       	brcs	.+46     	; 0x98a <__stack+0x8b>
+		char text[] = {char(0b00110000 | ones), '.', char(0b00110000 | onetens), char(0b00110000 | onehundreds), '\0'};
+ 95c:	ae 01       	movw	r20, r28
+ 95e:	4f 5f       	subi	r20, 0xFF	; 255
+ 960:	5f 4f       	sbci	r21, 0xFF	; 255
+ 962:	95 e0       	ldi	r25, 0x05	; 5
+ 964:	da 01       	movw	r26, r20
+ 966:	1d 92       	st	X+, r1
+ 968:	9a 95       	dec	r25
+ 96a:	e9 f7       	brne	.-6      	; 0x966 <__stack+0x67>
+ 96c:	9e e2       	ldi	r25, 0x2E	; 46
+ 96e:	9a 83       	std	Y+2, r25	; 0x02
+ 970:	00 63       	ori	r16, 0x30	; 48
+ 972:	09 83       	std	Y+1, r16	; 0x01
+ 974:	e0 63       	ori	r30, 0x30	; 48
+ 976:	eb 83       	std	Y+3, r30	; 0x03
+ 978:	80 63       	ori	r24, 0x30	; 48
+ 97a:	8c 83       	std	Y+4, r24	; 0x04
+		dispText(0x0C, false, text);
+ 97c:	60 e0       	ldi	r22, 0x00	; 0
+ 97e:	8c e0       	ldi	r24, 0x0C	; 12
+ 980:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
+		countlcd = 0;
+ 984:	10 92 61 01 	sts	0x0161, r1	; 0x800161 <countlcd>
+ 988:	03 c0       	rjmp	.+6      	; 0x990 <__stack+0x91>
+	} else {
+		countlcd++;
+ 98a:	2f 5f       	subi	r18, 0xFF	; 255
+ 98c:	20 93 61 01 	sts	0x0161, r18	; 0x800161 <countlcd>
 	}
 	
 }
- 774:	8f 91       	pop	r24
- 776:	0f 90       	pop	r0
- 778:	0f be       	out	0x3f, r0	; 63
- 77a:	0f 90       	pop	r0
- 77c:	1f 90       	pop	r1
- 77e:	18 95       	reti
+ 990:	0f 90       	pop	r0
+ 992:	0f 90       	pop	r0
+ 994:	0f 90       	pop	r0
+ 996:	0f 90       	pop	r0
+ 998:	0f 90       	pop	r0
+ 99a:	df 91       	pop	r29
+ 99c:	cf 91       	pop	r28
+ 99e:	ff 91       	pop	r31
+ 9a0:	ef 91       	pop	r30
+ 9a2:	bf 91       	pop	r27
+ 9a4:	af 91       	pop	r26
+ 9a6:	9f 91       	pop	r25
+ 9a8:	8f 91       	pop	r24
+ 9aa:	7f 91       	pop	r23
+ 9ac:	6f 91       	pop	r22
+ 9ae:	5f 91       	pop	r21
+ 9b0:	4f 91       	pop	r20
+ 9b2:	3f 91       	pop	r19
+ 9b4:	2f 91       	pop	r18
+ 9b6:	1f 91       	pop	r17
+ 9b8:	0f 91       	pop	r16
+ 9ba:	ff 90       	pop	r15
+ 9bc:	ef 90       	pop	r14
+ 9be:	0f 90       	pop	r0
+ 9c0:	0f be       	out	0x3f, r0	; 63
+ 9c2:	0f 90       	pop	r0
+ 9c4:	1f 90       	pop	r1
+ 9c6:	18 95       	reti
 
-00000780 <__vector_20>:
-
-ISR(USART_TX_vect) {
- 780:	1f 92       	push	r1
- 782:	0f 92       	push	r0
- 784:	0f b6       	in	r0, 0x3f	; 63
- 786:	0f 92       	push	r0
- 788:	11 24       	eor	r1, r1
- 78a:	8f 93       	push	r24
-	//change mode to receiver
-	UCSR0B = (0 << TXCIE0)|(0 << TXEN0)|(1 << RXCIE0)|(1 << RXEN0); //enabling reciever mode and interrupt
- 78c:	80 e9       	ldi	r24, 0x90	; 144
- 78e:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
-}
- 792:	8f 91       	pop	r24
- 794:	0f 90       	pop	r0
- 796:	0f be       	out	0x3f, r0	; 63
- 798:	0f 90       	pop	r0
- 79a:	1f 90       	pop	r1
- 79c:	18 95       	reti
-
-0000079e <__vector_18>:
-
-ISR(USART_RX_vect) {
- 79e:	1f 92       	push	r1
- 7a0:	0f 92       	push	r0
- 7a2:	0f b6       	in	r0, 0x3f	; 63
- 7a4:	0f 92       	push	r0
- 7a6:	11 24       	eor	r1, r1
- 7a8:	2f 93       	push	r18
- 7aa:	3f 93       	push	r19
- 7ac:	4f 93       	push	r20
- 7ae:	5f 93       	push	r21
- 7b0:	6f 93       	push	r22
- 7b2:	7f 93       	push	r23
- 7b4:	8f 93       	push	r24
- 7b6:	9f 93       	push	r25
- 7b8:	af 93       	push	r26
- 7ba:	bf 93       	push	r27
- 7bc:	ef 93       	push	r30
- 7be:	ff 93       	push	r31
-	uint8_t recievedData = UDR0;
- 7c0:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
-	if (recievedData == 0b00001111) {
- 7c4:	8f 30       	cpi	r24, 0x0F	; 15
- 7c6:	a9 f4       	brne	.+42     	; 0x7f2 <__vector_18+0x54>
-		UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
- 7c8:	88 e4       	ldi	r24, 0x48	; 72
- 7ca:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
-		dispText(0x00, true, "OK");
- 7ce:	4c e5       	ldi	r20, 0x5C	; 92
- 7d0:	51 e0       	ldi	r21, 0x01	; 1
- 7d2:	61 e0       	ldi	r22, 0x01	; 1
- 7d4:	80 e0       	ldi	r24, 0x00	; 0
- 7d6:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
- 7da:	2f ef       	ldi	r18, 0xFF	; 255
- 7dc:	87 ea       	ldi	r24, 0xA7	; 167
- 7de:	91 e6       	ldi	r25, 0x61	; 97
- 7e0:	21 50       	subi	r18, 0x01	; 1
- 7e2:	80 40       	sbci	r24, 0x00	; 0
- 7e4:	90 40       	sbci	r25, 0x00	; 0
- 7e6:	e1 f7       	brne	.-8      	; 0x7e0 <__vector_18+0x42>
- 7e8:	00 c0       	rjmp	.+0      	; 0x7ea <__vector_18+0x4c>
- 7ea:	00 00       	nop
-		_delay_ms(2000);
-		//INSERT CURRENT STATUS CODE HERE
-		first_override = true;
- 7ec:	81 e0       	ldi	r24, 0x01	; 1
- 7ee:	80 93 61 01 	sts	0x0161, r24	; 0x800161 <first_override>
-	}
-}
- 7f2:	ff 91       	pop	r31
- 7f4:	ef 91       	pop	r30
- 7f6:	bf 91       	pop	r27
- 7f8:	af 91       	pop	r26
- 7fa:	9f 91       	pop	r25
- 7fc:	8f 91       	pop	r24
- 7fe:	7f 91       	pop	r23
- 800:	6f 91       	pop	r22
- 802:	5f 91       	pop	r21
- 804:	4f 91       	pop	r20
- 806:	3f 91       	pop	r19
- 808:	2f 91       	pop	r18
- 80a:	0f 90       	pop	r0
- 80c:	0f be       	out	0x3f, r0	; 63
- 80e:	0f 90       	pop	r0
- 810:	1f 90       	pop	r1
- 812:	18 95       	reti
-
-00000814 <main>:
-
+000009c8 <main>:
+/*---------- END MODULE B FUNCTIONS ----------*/
 
 int main(void)
 {
 	// Data direction register declaration
 	DDRD = (1 << PIND4) | (1 << PIND5) | (1 << PIND6) | (1 << PIND7); // PIND4-7 stepper motor output GPIO
- 814:	80 ef       	ldi	r24, 0xF0	; 240
- 816:	8a b9       	out	0x0a, r24	; 10
+ 9c8:	80 ef       	ldi	r24, 0xF0	; 240
+ 9ca:	8a b9       	out	0x0a, r24	; 10
 	DDRB = (0 << PINB0) | (0 << PINB1) | (0 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5); // PINB0-2 button input GPIO, PINB3 active buzzer output GPIO, PINB4-5 LED output GPIO
- 818:	88 e3       	ldi	r24, 0x38	; 56
- 81a:	84 b9       	out	0x04, r24	; 4
+ 9cc:	88 e3       	ldi	r24, 0x38	; 56
+ 9ce:	84 b9       	out	0x04, r24	; 4
 	
 	// LCD code
 	//Configure Bit Rate (TWBR and TWSR)
 	TWBR = 18; //TWBR=18
- 81c:	82 e1       	ldi	r24, 0x12	; 18
- 81e:	80 93 b8 00 	sts	0x00B8, r24	; 0x8000b8 <__TEXT_REGION_LENGTH__+0x7f80b8>
+ 9d0:	82 e1       	ldi	r24, 0x12	; 18
+ 9d2:	80 93 b8 00 	sts	0x00B8, r24	; 0x8000b8 <__TEXT_REGION_LENGTH__+0x7f80b8>
 	TWSR = (0<<TWPS1)|(1<<TWPS0); //PRESCALER = 1
- 822:	c1 e0       	ldi	r28, 0x01	; 1
- 824:	c0 93 b9 00 	sts	0x00B9, r28	; 0x8000b9 <__TEXT_REGION_LENGTH__+0x7f80b9>
+ 9d6:	c1 e0       	ldi	r28, 0x01	; 1
+ 9d8:	c0 93 b9 00 	sts	0x00B9, r28	; 0x8000b9 <__TEXT_REGION_LENGTH__+0x7f80b9>
 	//Configure TWI Interface (TWCR)
 	TWCR = (1<<TWEN);
- 828:	84 e0       	ldi	r24, 0x04	; 4
- 82a:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
+ 9dc:	84 e0       	ldi	r24, 0x04	; 4
+ 9de:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
 	//INITIALIZE LCD
 	TWI(LCD_ADDRESS,0x30|LCD_DISABLE|LCD_WRITE|LCD_BL); // (data length of 8, number of lines=2, 5x8 digit space, load data)
- 82e:	6c e3       	ldi	r22, 0x3C	; 60
- 830:	8e e4       	ldi	r24, 0x4E	; 78
- 832:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ 9e2:	6c e3       	ldi	r22, 0x3C	; 60
+ 9e4:	8e e4       	ldi	r24, 0x4E	; 78
+ 9e6:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x30|LCD_ENABLE|LCD_WRITE|LCD_BL); // (clock in data)
- 836:	68 e3       	ldi	r22, 0x38	; 56
- 838:	8e e4       	ldi	r24, 0x4E	; 78
- 83a:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
- 83e:	8f e5       	ldi	r24, 0x5F	; 95
- 840:	9a ee       	ldi	r25, 0xEA	; 234
- 842:	01 97       	sbiw	r24, 0x01	; 1
- 844:	f1 f7       	brne	.-4      	; 0x842 <main+0x2e>
- 846:	00 c0       	rjmp	.+0      	; 0x848 <main+0x34>
- 848:	00 00       	nop
+ 9ea:	68 e3       	ldi	r22, 0x38	; 56
+ 9ec:	8e e4       	ldi	r24, 0x4E	; 78
+ 9ee:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ 9f2:	8f e5       	ldi	r24, 0x5F	; 95
+ 9f4:	9a ee       	ldi	r25, 0xEA	; 234
+ 9f6:	01 97       	sbiw	r24, 0x01	; 1
+ 9f8:	f1 f7       	brne	.-4      	; 0x9f6 <main+0x2e>
+ 9fa:	00 c0       	rjmp	.+0      	; 0x9fc <main+0x34>
+ 9fc:	00 00       	nop
 	_delay_ms(15);
 	TWI(LCD_ADDRESS,0x30|LCD_DISABLE|LCD_WRITE|LCD_BL); // (data length of 8, number of lines=2, 5x8 digit space, load data)
- 84a:	6c e3       	ldi	r22, 0x3C	; 60
- 84c:	8e e4       	ldi	r24, 0x4E	; 78
- 84e:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ 9fe:	6c e3       	ldi	r22, 0x3C	; 60
+ a00:	8e e4       	ldi	r24, 0x4E	; 78
+ a02:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x30|LCD_ENABLE|LCD_WRITE|LCD_BL); // (clock in data)
- 852:	68 e3       	ldi	r22, 0x38	; 56
- 854:	8e e4       	ldi	r24, 0x4E	; 78
- 856:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
- 85a:	8f e0       	ldi	r24, 0x0F	; 15
- 85c:	90 e4       	ldi	r25, 0x40	; 64
- 85e:	01 97       	sbiw	r24, 0x01	; 1
- 860:	f1 f7       	brne	.-4      	; 0x85e <main+0x4a>
- 862:	00 c0       	rjmp	.+0      	; 0x864 <main+0x50>
- 864:	00 00       	nop
+ a06:	68 e3       	ldi	r22, 0x38	; 56
+ a08:	8e e4       	ldi	r24, 0x4E	; 78
+ a0a:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a0e:	8f e0       	ldi	r24, 0x0F	; 15
+ a10:	90 e4       	ldi	r25, 0x40	; 64
+ a12:	01 97       	sbiw	r24, 0x01	; 1
+ a14:	f1 f7       	brne	.-4      	; 0xa12 <main+0x4a>
+ a16:	00 c0       	rjmp	.+0      	; 0xa18 <main+0x50>
+ a18:	00 00       	nop
 	_delay_ms(4.1);
 	TWI(LCD_ADDRESS,0x30|LCD_DISABLE|LCD_WRITE|LCD_BL); // (data length of 8, number of lines=2, 5x8 digit space, load data)
- 866:	6c e3       	ldi	r22, 0x3C	; 60
- 868:	8e e4       	ldi	r24, 0x4E	; 78
- 86a:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a1a:	6c e3       	ldi	r22, 0x3C	; 60
+ a1c:	8e e4       	ldi	r24, 0x4E	; 78
+ a1e:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x30|LCD_ENABLE|LCD_WRITE|LCD_BL); // (clock in data)
- 86e:	68 e3       	ldi	r22, 0x38	; 56
- 870:	8e e4       	ldi	r24, 0x4E	; 78
- 872:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
- 876:	8f e0       	ldi	r24, 0x0F	; 15
- 878:	90 e4       	ldi	r25, 0x40	; 64
- 87a:	01 97       	sbiw	r24, 0x01	; 1
- 87c:	f1 f7       	brne	.-4      	; 0x87a <main+0x66>
- 87e:	00 c0       	rjmp	.+0      	; 0x880 <main+0x6c>
- 880:	00 00       	nop
+ a22:	68 e3       	ldi	r22, 0x38	; 56
+ a24:	8e e4       	ldi	r24, 0x4E	; 78
+ a26:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a2a:	8f e0       	ldi	r24, 0x0F	; 15
+ a2c:	90 e4       	ldi	r25, 0x40	; 64
+ a2e:	01 97       	sbiw	r24, 0x01	; 1
+ a30:	f1 f7       	brne	.-4      	; 0xa2e <main+0x66>
+ a32:	00 c0       	rjmp	.+0      	; 0xa34 <main+0x6c>
+ a34:	00 00       	nop
 	_delay_ms(4.1);
 	TWI(LCD_ADDRESS,0x20|LCD_DISABLE|LCD_WRITE|LCD_BL); // (data length of 4, number of lines=2, 5x8 digit space, load data)
- 882:	6c e2       	ldi	r22, 0x2C	; 44
- 884:	8e e4       	ldi	r24, 0x4E	; 78
- 886:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a36:	6c e2       	ldi	r22, 0x2C	; 44
+ a38:	8e e4       	ldi	r24, 0x4E	; 78
+ a3a:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x20|LCD_ENABLE|LCD_WRITE|LCD_BL); // (clock in data)
- 88a:	68 e2       	ldi	r22, 0x28	; 40
- 88c:	8e e4       	ldi	r24, 0x4E	; 78
- 88e:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a3e:	68 e2       	ldi	r22, 0x28	; 40
+ a40:	8e e4       	ldi	r24, 0x4E	; 78
+ a42:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x20|LCD_DISABLE|LCD_WRITE|LCD_BL); // (load data)
- 892:	6c e2       	ldi	r22, 0x2C	; 44
- 894:	8e e4       	ldi	r24, 0x4E	; 78
- 896:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a46:	6c e2       	ldi	r22, 0x2C	; 44
+ a48:	8e e4       	ldi	r24, 0x4E	; 78
+ a4a:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x20|LCD_ENABLE|LCD_WRITE|LCD_BL); // (clock in data)
- 89a:	68 e2       	ldi	r22, 0x28	; 40
- 89c:	8e e4       	ldi	r24, 0x4E	; 78
- 89e:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a4e:	68 e2       	ldi	r22, 0x28	; 40
+ a50:	8e e4       	ldi	r24, 0x4E	; 78
+ a52:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	//HOME CURSOR
 	TWI(LCD_ADDRESS,0x80|LCD_DISABLE|LCD_WRITE|LCD_BL); // (load data)
- 8a2:	6c e8       	ldi	r22, 0x8C	; 140
- 8a4:	8e e4       	ldi	r24, 0x4E	; 78
- 8a6:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a56:	6c e8       	ldi	r22, 0x8C	; 140
+ a58:	8e e4       	ldi	r24, 0x4E	; 78
+ a5a:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	TWI(LCD_ADDRESS,0x80|LCD_ENABLE|LCD_WRITE|LCD_BL); // (clock in data)
- 8aa:	68 e8       	ldi	r22, 0x88	; 136
- 8ac:	8e e4       	ldi	r24, 0x4E	; 78
- 8ae:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
+ a5e:	68 e8       	ldi	r22, 0x88	; 136
+ a60:	8e e4       	ldi	r24, 0x4E	; 78
+ a62:	0e 94 93 00 	call	0x126	; 0x126 <_Z3TWIhh>
 	//CLEAR DISPLAY AND WAIT TO FINSIH
 	LCD_Command(CLEAR_DISPLAY);
- 8b2:	81 e0       	ldi	r24, 0x01	; 1
- 8b4:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
- 8b8:	8f e3       	ldi	r24, 0x3F	; 63
- 8ba:	9f e1       	ldi	r25, 0x1F	; 31
- 8bc:	01 97       	sbiw	r24, 0x01	; 1
- 8be:	f1 f7       	brne	.-4      	; 0x8bc <main+0xa8>
- 8c0:	00 c0       	rjmp	.+0      	; 0x8c2 <main+0xae>
- 8c2:	00 00       	nop
+ a66:	81 e0       	ldi	r24, 0x01	; 1
+ a68:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
+ a6c:	8f e3       	ldi	r24, 0x3F	; 63
+ a6e:	9f e1       	ldi	r25, 0x1F	; 31
+ a70:	01 97       	sbiw	r24, 0x01	; 1
+ a72:	f1 f7       	brne	.-4      	; 0xa70 <main+0xa8>
+ a74:	00 c0       	rjmp	.+0      	; 0xa76 <main+0xae>
+ a76:	00 00       	nop
 	_delay_ms(2);
 	LCD_Command(0x0C); //Display no cursor
- 8c4:	8c e0       	ldi	r24, 0x0C	; 12
- 8c6:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
+ a78:	8c e0       	ldi	r24, 0x0C	; 12
+ a7a:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
 	LCD_Command(0x06); //Automatic Increment
- 8ca:	86 e0       	ldi	r24, 0x06	; 6
- 8cc:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
+ a7e:	86 e0       	ldi	r24, 0x06	; 6
+ a80:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <_Z11LCD_Commandh>
 	
 	// LCD initial message
 	dispText(0x00, true, "DISSARMED");
- 8d0:	41 e0       	ldi	r20, 0x01	; 1
- 8d2:	51 e0       	ldi	r21, 0x01	; 1
- 8d4:	61 e0       	ldi	r22, 0x01	; 1
- 8d6:	80 e0       	ldi	r24, 0x00	; 0
- 8d8:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
+ a84:	41 e0       	ldi	r20, 0x01	; 1
+ a86:	51 e0       	ldi	r21, 0x01	; 1
+ a88:	61 e0       	ldi	r22, 0x01	; 1
+ a8a:	80 e0       	ldi	r24, 0x00	; 0
+ a8c:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 	dispText(0x40, false, "CODE:    ");
- 8dc:	4b e0       	ldi	r20, 0x0B	; 11
- 8de:	51 e0       	ldi	r21, 0x01	; 1
- 8e0:	60 e0       	ldi	r22, 0x00	; 0
- 8e2:	80 e4       	ldi	r24, 0x40	; 64
- 8e4:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
+ a90:	4b e0       	ldi	r20, 0x0B	; 11
+ a92:	51 e0       	ldi	r21, 0x01	; 1
+ a94:	60 e0       	ldi	r22, 0x00	; 0
+ a96:	80 e4       	ldi	r24, 0x40	; 64
+ a98:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <_Z8dispTexthbPKc>
 	PORTB |= (1 << PINB5);
- 8e8:	85 b1       	in	r24, 0x05	; 5
- 8ea:	80 62       	ori	r24, 0x20	; 32
- 8ec:	85 b9       	out	0x05, r24	; 5
+ a9c:	85 b1       	in	r24, 0x05	; 5
+ a9e:	80 62       	ori	r24, 0x20	; 32
+ aa0:	85 b9       	out	0x05, r24	; 5
 
 	// Timer 1 Initialization
 	//Configure Timer 1
 	TCCR1A = (0 << WGM11) | (0 << WGM10); // Configuring for CTC mode
- 8ee:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
+ aa2:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
 	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (0 << CS11) | (1 << CS10); // Prescaler of 1
- 8f2:	89 e0       	ldi	r24, 0x09	; 9
- 8f4:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
+ aa6:	89 e0       	ldi	r24, 0x09	; 9
+ aa8:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
 	TIMSK1 = (1 << OCIE1A);
- 8f8:	82 e0       	ldi	r24, 0x02	; 2
- 8fa:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7f806f>
+ aac:	82 e0       	ldi	r24, 0x02	; 2
+ aae:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7f806f>
 	OCR1A = 15999; // 1 ms
- 8fe:	8f e7       	ldi	r24, 0x7F	; 127
- 900:	9e e3       	ldi	r25, 0x3E	; 62
- 902:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
- 906:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+ ab2:	8f e7       	ldi	r24, 0x7F	; 127
+ ab4:	9e e3       	ldi	r25, 0x3E	; 62
+ ab6:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ aba:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+	
+	/*---------- MODULE B SETUP CODE ----------*/
+	//IO config
+	DDRC |= (1 << PINC1); //LED write pin
+ abe:	87 b1       	in	r24, 0x07	; 7
+ ac0:	82 60       	ori	r24, 0x02	; 2
+ ac2:	87 b9       	out	0x07, r24	; 7
+	DDRC &= ~(1 << PINC0); //ADC pin
+ ac4:	87 b1       	in	r24, 0x07	; 7
+ ac6:	8e 7f       	andi	r24, 0xFE	; 254
+ ac8:	87 b9       	out	0x07, r24	; 7
+	DDRD &= ~(1 << PIND2); //interrupt pin
+ aca:	8a b1       	in	r24, 0x0a	; 10
+ acc:	8b 7f       	andi	r24, 0xFB	; 251
+ ace:	8a b9       	out	0x0a, r24	; 10
+	
+	//ADC config
+	ADMUX = (1 << ADLAR)|(0 << REFS1)|(1 << REFS0); //left adjust ADC result, using PINC0, 5v internal reference
+ ad0:	80 e6       	ldi	r24, 0x60	; 96
+ ad2:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7f807c>
+	ADCSRA = (1 << ADEN)|(1 << ADSC)|(1 << ADIE)|(1 << ADPS2)|(1 << ADPS1)|(1 << ADPS0); //enable ADC, start ADC, enable ADC interrupt, Prescaler 128
+ ad6:	8f ec       	ldi	r24, 0xCF	; 207
+ ad8:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
+	
+	//external interrupt 0 config
+	EIMSK |= (1 << INT0); //enable int0
+ adc:	8d b3       	in	r24, 0x1d	; 29
+ ade:	81 60       	ori	r24, 0x01	; 1
+ ae0:	8d bb       	out	0x1d, r24	; 29
+	EICRA |= (1 << ISC01); //setting trigger on falling edge
+ ae2:	e9 e6       	ldi	r30, 0x69	; 105
+ ae4:	f0 e0       	ldi	r31, 0x00	; 0
+ ae6:	80 81       	ld	r24, Z
+ ae8:	82 60       	ori	r24, 0x02	; 2
+ aea:	80 83       	st	Z, r24
+	EICRA &= ~(1 << ISC00);
+ aec:	80 81       	ld	r24, Z
+ aee:	8e 7f       	andi	r24, 0xFE	; 254
+ af0:	80 83       	st	Z, r24
+	/*---------- END B SETUP CODE ----------*/
 	
 	/*---------- MODULE E SETUP CODE ----------*/
 	//IO config
 	DDRD &= ~(1 << PIND3);
- 90a:	8a b1       	in	r24, 0x0a	; 10
- 90c:	87 7f       	andi	r24, 0xF7	; 247
- 90e:	8a b9       	out	0x0a, r24	; 10
+ af2:	8a b1       	in	r24, 0x0a	; 10
+ af4:	87 7f       	andi	r24, 0xF7	; 247
+ af6:	8a b9       	out	0x0a, r24	; 10
 	
 	//USART config
 	UCSR0A = (0 << U2X0)|(1 << MPCM0); //standard data prescaler, enable multiprocessor communication mode
- 910:	e0 ec       	ldi	r30, 0xC0	; 192
- 912:	f0 e0       	ldi	r31, 0x00	; 0
- 914:	c0 83       	st	Z, r28
+ af8:	a0 ec       	ldi	r26, 0xC0	; 192
+ afa:	b0 e0       	ldi	r27, 0x00	; 0
+ afc:	cc 93       	st	X, r28
 	UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
- 916:	88 e4       	ldi	r24, 0x48	; 72
- 918:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+ afe:	88 e4       	ldi	r24, 0x48	; 72
+ b00:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
 	UCSR0A = (1 << UCSZ01)|(1 << UCSZ00); //setting frame size to 8 bits
- 91c:	86 e0       	ldi	r24, 0x06	; 6
- 91e:	80 83       	st	Z, r24
+ b04:	86 e0       	ldi	r24, 0x06	; 6
+ b06:	8c 93       	st	X, r24
 	UBRR0 = 7; //setting baud rate to 250k
- 920:	87 e0       	ldi	r24, 0x07	; 7
- 922:	90 e0       	ldi	r25, 0x00	; 0
- 924:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
- 928:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+ b08:	87 e0       	ldi	r24, 0x07	; 7
+ b0a:	90 e0       	ldi	r25, 0x00	; 0
+ b0c:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
+ b10:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
 
 	//external interrupt 1 config
 	EIMSK |= (1 << INT1); //enabling int 1
- 92c:	8d b3       	in	r24, 0x1d	; 29
- 92e:	82 60       	ori	r24, 0x02	; 2
- 930:	8d bb       	out	0x1d, r24	; 29
+ b14:	8d b3       	in	r24, 0x1d	; 29
+ b16:	82 60       	ori	r24, 0x02	; 2
+ b18:	8d bb       	out	0x1d, r24	; 29
 	EICRA |= (1 << ISC11); //setting trigger on falling edge
- 932:	e9 e6       	ldi	r30, 0x69	; 105
- 934:	f0 e0       	ldi	r31, 0x00	; 0
- 936:	80 81       	ld	r24, Z
- 938:	88 60       	ori	r24, 0x08	; 8
- 93a:	80 83       	st	Z, r24
+ b1a:	80 81       	ld	r24, Z
+ b1c:	88 60       	ori	r24, 0x08	; 8
+ b1e:	80 83       	st	Z, r24
 	EICRA &= ~(1 << ISC10);
- 93c:	80 81       	ld	r24, Z
- 93e:	8b 7f       	andi	r24, 0xFB	; 251
- 940:	80 83       	st	Z, r24
+ b20:	80 81       	ld	r24, Z
+ b22:	8b 7f       	andi	r24, 0xFB	; 251
+ b24:	80 83       	st	Z, r24
 	/*---------- END MODULE E SETUP CODE ----------*/
 	
 	sei();
- 942:	78 94       	sei
- 944:	ff cf       	rjmp	.-2      	; 0x944 <__stack+0x45>
+ b26:	78 94       	sei
+ b28:	ff cf       	rjmp	.-2      	; 0xb28 <main+0x160>
 
-00000946 <__tablejump2__>:
- 946:	ee 0f       	add	r30, r30
- 948:	ff 1f       	adc	r31, r31
- 94a:	05 90       	lpm	r0, Z+
- 94c:	f4 91       	lpm	r31, Z
- 94e:	e0 2d       	mov	r30, r0
- 950:	09 94       	ijmp
+00000b2a <__tablejump2__>:
+ b2a:	ee 0f       	add	r30, r30
+ b2c:	ff 1f       	adc	r31, r31
+ b2e:	05 90       	lpm	r0, Z+
+ b30:	f4 91       	lpm	r31, Z
+ b32:	e0 2d       	mov	r30, r0
+ b34:	09 94       	ijmp
 
-00000952 <_exit>:
- 952:	f8 94       	cli
+00000b36 <__umulhisi3>:
+ b36:	a2 9f       	mul	r26, r18
+ b38:	b0 01       	movw	r22, r0
+ b3a:	b3 9f       	mul	r27, r19
+ b3c:	c0 01       	movw	r24, r0
+ b3e:	a3 9f       	mul	r26, r19
+ b40:	70 0d       	add	r23, r0
+ b42:	81 1d       	adc	r24, r1
+ b44:	11 24       	eor	r1, r1
+ b46:	91 1d       	adc	r25, r1
+ b48:	b2 9f       	mul	r27, r18
+ b4a:	70 0d       	add	r23, r0
+ b4c:	81 1d       	adc	r24, r1
+ b4e:	11 24       	eor	r1, r1
+ b50:	91 1d       	adc	r25, r1
+ b52:	08 95       	ret
 
-00000954 <__stop_program>:
- 954:	ff cf       	rjmp	.-2      	; 0x954 <__stop_program>
+00000b54 <_exit>:
+ b54:	f8 94       	cli
+
+00000b56 <__stop_program>:
+ b56:	ff cf       	rjmp	.-2      	; 0xb56 <__stop_program>

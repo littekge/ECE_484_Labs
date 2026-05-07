@@ -127,8 +127,9 @@ void dispText(uint8_t address, bool clear, const char* text) {
 	//set LCD
 	if (clear) {
 		LCD_Command(CLEAR_DISPLAY); //clear display
+		_delay_ms(2);
 	}
-	_delay_ms(2);
+	
 	LCD_Command(SET_ADDRESS|address); //set address
 	uint8_t i = 0;
 	while (text[i] != '\0') {
@@ -396,6 +397,7 @@ ISR(TIMER1_COMPA_vect) {
 	//stateMachine(falling);
     uint8_t falling = softwareDebounce(PINB & ((1 << PINB0) | (1 << PINB1) | (1 << PINB2)));
 	stateMachine(falling);
+	ADCSRA |= (1 << ADSC); //starting the ADC conversion again
 }
 
 
@@ -403,11 +405,7 @@ ISR(TIMER1_COMPA_vect) {
 ISR(INT1_vect) {
 	if (UCSR0A & (1 << UDRE0)) { //check if transmit buffer is empty
 		UDR0 = 0b11110000; //send code
-		//UDR0 = 0b01010100; //send code
-		//dispText(0x00, true, "TEST TEST");
-		//_delay_ms(2000);
 	}
-	
 }
 
 ISR(USART_TX_vect) {
@@ -421,12 +419,39 @@ ISR(USART_RX_vect) {
 		UCSR0B = (1 << TXCIE0)|(1 << TXEN0)|(0 << RXCIE0)|(0 << RXEN0); //enabling transmitter mode, and interrupt
 		dispText(0x00, true, "OK");
 		_delay_ms(2000);
-		//INSERT CURRENT STATUS CODE HERE
 		first_override = true;
 	}
 }
 /*---------- END MODULE E FUNCTIONS ----------*/
 
+/*---------- MODULE B FUNCTIONS ----------*/
+
+ISR(INT0_vect) {
+	PORTC ^= (1 << PINC1); //toggle output to led
+}
+
+uint8_t countlcd = 0; //lcd print delay
+
+ISR(ADC_vect) {
+	uint16_t ADCVal = ADCH;
+	
+	const uint16_t stepSize = 196; //step size of 196 (approximating floats)
+	uint16_t voltage = ADCVal * stepSize;
+	
+	uint8_t ones = (voltage/10000) % 10;
+	uint8_t onetens = (voltage/1000) % 10;
+	uint8_t onehundreds = (voltage/100) % 10;
+	if (countlcd >= 100) {
+		char text[] = {char(0b00110000 | ones), '.', char(0b00110000 | onetens), char(0b00110000 | onehundreds), '\0'};
+		dispText(0x0C, false, text);
+		countlcd = 0;
+	} else {
+		countlcd++;
+	}
+}
+
+
+/*---------- END MODULE B FUNCTIONS ----------*/
 
 int main(void)
 {
@@ -474,6 +499,22 @@ int main(void)
 	TCCR1B = (0 << WGM13) | (1 << WGM12) | (0 << CS12) | (0 << CS11) | (1 << CS10); // Prescaler of 1
 	TIMSK1 = (1 << OCIE1A);
 	OCR1A = 15999; // 1 ms
+	
+	/*---------- MODULE B SETUP CODE ----------*/
+	//IO config
+	DDRC |= (1 << PINC1); //LED write pin
+	DDRC &= ~(1 << PINC0); //ADC pin
+	DDRD &= ~(1 << PIND2); //interrupt pin
+	
+	//ADC config
+	ADMUX = (1 << ADLAR)|(0 << REFS1)|(1 << REFS0); //left adjust ADC result, using PINC0, 5v internal reference
+	ADCSRA = (1 << ADEN)|(1 << ADSC)|(1 << ADIE)|(1 << ADPS2)|(1 << ADPS1)|(1 << ADPS0); //enable ADC, start ADC, enable ADC interrupt, Prescaler 128
+	
+	//external interrupt 0 config
+	EIMSK |= (1 << INT0); //enable int0
+	EICRA |= (1 << ISC01); //setting trigger on falling edge
+	EICRA &= ~(1 << ISC00);
+	/*---------- END B SETUP CODE ----------*/
 	
 	/*---------- MODULE E SETUP CODE ----------*/
 	//IO config
